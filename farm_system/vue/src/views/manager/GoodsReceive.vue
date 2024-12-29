@@ -48,7 +48,6 @@ const data = reactive({
 })
 
 let str1 = "Hello World!";
-// 获取到农产品的数据
 request.get('/goods/selectAll').then(res => {
   data.goodsList = res.data
 })

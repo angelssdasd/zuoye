@@ -4,7 +4,7 @@
       <div style="flex: 1">
         <div style="padding-left: 20px; display: flex; align-items: center">
           <img src="@/assets/imgs/logo.png" alt="" style="width: 40px">
-          <div style="font-weight: bold; font-size: 24px; margin-left: 5px; color: #39bf23">农产品销售系统</div>
+          <div style="font-weight: bold; font-size: 24px; margin-left: 5px; color: #39bf23">超市销售管理系统</div>
         </div>
       </div>
       <div style="width: fit-content; padding-right: 10px; display: flex; align-items: center;">
@@ -27,7 +27,7 @@
           </el-menu-item>
           <el-menu-item index="/buy" v-if="data.user.role === 'USER'">
             <el-icon><Goods /></el-icon>
-            <span>农产品购买</span>
+            <span>商品购买</span>
           </el-menu-item>
           <el-menu-item index="/goodreceive" v-if="data.user.role === 'USER'">
               <el-icon><Menu /></el-icon>
@@ -37,7 +37,7 @@
               <el-icon><Menu /></el-icon>
               <span>收货单</span>
             </el-menu-item>
-          <el-menu-item index="/orders">
+          <el-menu-item index="/orders" v-if="data.user.role === 'USER'">
             <el-icon><Tickets /></el-icon>
             <span>订单管理</span>
           </el-menu-item>
@@ -48,20 +48,20 @@
           <el-sub-menu index="1" v-if="data.user.role === 'ADMIN'">
             <template #title>
               <el-icon><Menu /></el-icon>
-              <span>农产品管理</span>
+              <span>商品管理</span>
             </template>
             <el-menu-item index="/category">
               <el-icon><Menu /></el-icon>
-              <span>农产品分类管理</span>
+              <span>商品分类管理</span>
             </el-menu-item>
       
             <el-menu-item index="/goods">
               <el-icon><Goods /></el-icon>
-              <span>农产品管理</span>
+              <span>商品管理</span>
             </el-menu-item>
             <el-menu-item index="/goodsStock">
               <el-icon><SoldOut /></el-icon>
-              <span>农产品进货管理</span>
+              <span>进货管理</span>
             </el-menu-item>
           </el-sub-menu>
           <el-menu-item index="/notice" v-if="data.user.role === 'ADMIN'">

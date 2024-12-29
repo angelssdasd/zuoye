@@ -28,14 +28,13 @@ CREATE TABLE `admin`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '角色',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `username`(`username`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '管理员信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES (1, 'admin', 'admin', '管理员', 'http://localhost:9090/files/download/avatar.png', 'ADMIN');
+INSERT INTO `admin` VALUES (1, 'admin', 'admin', '管理员', 'http://localhost:9090/files/download/1735361914099-702ccf9fb3016b6bc97c222346d1f1a.png', 'ADMIN');
 
 -- ----------------------------
 -- Table structure for category
@@ -50,10 +49,10 @@ CREATE TABLE `category`  (
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (1, '蔬菜');
+INSERT INTO `category` VALUES (1, '厨具');
 INSERT INTO `category` VALUES (2, '水果');
 INSERT INTO `category` VALUES (3, '农副产品');
-INSERT INTO `category` VALUES (4, '菌菇');
+INSERT INTO `category` VALUES (4, '食品区');
 
 -- ----------------------------
 -- Table structure for goods
@@ -75,10 +74,10 @@ CREATE TABLE `goods`  (
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES (1, '新鲜土豆', 'http://localhost:9090/files/download/1720146768626-土豆1.png', '新鲜土豆，产自海南，好吃不贵', '香甜软糯，口口留香', 0.85, '斤', 2200, 1);
-INSERT INTO `goods` VALUES (2, '西红柿', 'http://localhost:9090/files/download/1720146162330-西红柿.png', '新疆普罗旺斯沙瓤西红柿，新鲜上市', '香糯软沙，满口留香', 9.90, 'kg', 1099, 1);
-INSERT INTO `goods` VALUES (4, '黄桃', 'http://localhost:9090/files/download/1720164318655-黄桃.png', '山东蒙阴黄桃新鲜水果桃子黄金蜜桃黄毛桃', '出口品质，山泉灌溉', 5.88, '斤', 998, 2);
-INSERT INTO `goods` VALUES (5, '美都西瓜', 'http://localhost:9090/files/download/1720164348761-西瓜.png', '超甜美都西瓜8424美都现摘薄皮无籽有籽当季新鲜水果超甜美都西瓜8424美都现摘薄皮无籽有籽当季新鲜水果', '花样吃法，口感更佳', 21.99, '个', 665, 2);
+INSERT INTO `goods` VALUES (1, '筷子', 'http://localhost:9090/files/download/1735363119460-b3f227b5c6ae42d70c87b68f0dd1ce1.png', '优质筷子', '钢材', 0.85, '斤', 2200, 1);
+INSERT INTO `goods` VALUES (2, '奥利奥', 'http://localhost:9090/files/download/1735363207062-ec7600da9cf92afcd1958eef2d8617b.png', '好吃的饼干', '巧克力', 9.90, 'kg', 1099, 1);
+INSERT INTO `goods` VALUES (4, '黄桃', 'http://localhost:9090/files/download/1735363287822-22bedd759af22e313d4f72c0a520dd6.png', '山东蒙阴黄桃新鲜水果桃子黄金蜜桃黄毛桃', '出口品质，山泉灌溉', 5.88, '斤', 998, 2);
+INSERT INTO `goods` VALUES (5, '西红柿', 'http://localhost:9090/files/download/1735363365044-2fb5e2d91828388fc269e1c75d07d5c.png', '沙瓤西红柿', '花样吃法，口感更佳', 21.99, '个', 665, 2);
 
 -- ----------------------------
 -- Table structure for goods_stock
@@ -170,8 +169,7 @@ CREATE TABLE `user`  (
   `sex` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '性别',
   `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '电话',
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `username`(`username`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '普通用户信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
