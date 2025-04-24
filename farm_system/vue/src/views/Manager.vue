@@ -25,67 +25,61 @@
             <el-icon><HomeFilled /></el-icon>
             <span>系统首页</span>
           </el-menu-item>
-          <el-menu-item index="/buy" v-if="data.user.role === 'USER'">
-            <el-icon><Goods /></el-icon>
-            <span>商品购买</span>
-          </el-menu-item>
           <el-menu-item index="/goodreceive" v-if="data.user.role === 'USER'">
               <el-icon><Menu /></el-icon>
-              <span>收货管理</span>
+              <span>审核评论</span>
             </el-menu-item>
-            <el-menu-item index="/receive" v-if="data.user.role === 'USER'">
-              <el-icon><Menu /></el-icon>
-              <span>收货单</span>
-            </el-menu-item>
-          <el-menu-item index="/orders" v-if="data.user.role === 'USER'">
-            <el-icon><Tickets /></el-icon>
-            <span>订单管理</span>
-          </el-menu-item>
-          <el-menu-item index="/returns" v-if="data.user.role === 'USER'">
-            <el-icon><Tickets /></el-icon>
-            <span>退货单</span>
-          </el-menu-item>
           <el-sub-menu index="1" v-if="data.user.role === 'ADMIN'">
             <template #title>
               <el-icon><Menu /></el-icon>
-              <span>商品管理</span>
+              <span>人员管理</span>
             </template>
             <el-menu-item index="/category">
               <el-icon><Menu /></el-icon>
-              <span>商品分类管理</span>
+              <span>海外文物用户管理</span>
             </el-menu-item>
       
             <el-menu-item index="/goods">
               <el-icon><Goods /></el-icon>
-              <span>商品管理</span>
+              <span>知识问答字用户管理</span>
             </el-menu-item>
             <el-menu-item index="/goodsStock">
               <el-icon><SoldOut /></el-icon>
-              <span>进货管理</span>
+              <span>掌上客户端用户管理</span>
+            </el-menu-item>
+            <el-menu-item index="/goodsStock">
+              <el-icon><SoldOut /></el-icon>
+              <span>审核员管理</span>
+            </el-menu-item>
+            <el-menu-item index="/goodsStock">
+              <el-icon><SoldOut /></el-icon>
+              <span>管理员管理</span>
             </el-menu-item>
           </el-sub-menu>
-          <el-menu-item index="/notice" v-if="data.user.role === 'ADMIN'">
-            <el-icon><Bell /></el-icon>
-            <span>系统公告管理</span>
-          </el-menu-item>
+      
           <el-sub-menu index="3" v-if="data.user.role === 'ADMIN'">
             <template #title>
               <el-icon><Memo /></el-icon>
-              <span>用户管理</span>
+              <span>日志记录</span>
             </template>
             <el-menu-item index="/member">
               <el-icon><User /></el-icon>
-              <span>会员</span>
+              <span>审核员日志记录</span>
             </el-menu-item>
             <el-menu-item index="/supplier">
               <el-icon><User /></el-icon>
-              <span>供应商</span>
+              <span>系统日志</span>
             </el-menu-item>
             <el-menu-item index="/user">
               <el-icon><User /></el-icon>
-              <span>员工</span>
+              <span>备份记录</span>
             </el-menu-item>
           </el-sub-menu>
+            <el-menu-item index="/supplier" v-if="data.user.role === 'ADMIN'">
+              <el-icon><User /></el-icon>
+              <span>数据库备份和恢复</span>
+            </el-menu-item>
+          
           <el-menu-item index="/person">
             <el-icon><User /></el-icon>
             <span>个人资料</span>
