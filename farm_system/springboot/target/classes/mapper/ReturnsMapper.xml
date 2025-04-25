@@ -5,8 +5,8 @@
 <mapper namespace="com.example.mapper.ReturnsMapper">
 
     <select id="selectAll" resultType="com.example.entity.Returns">
-        select returns.id,returns.orders_id as orderId,goods.name as goodName,returns.num,returns.total_price,returns.return_date,returns.return_name from returns
-            left join goods on returns.good_id=goods.id
+        select returns.id,returns.orders_id as orderId,qa.name as goodName,returns.num,returns.total_price,returns.return_date,returns.return_name from returns
+            left join qa on returns.good_id=qa.id
         <where>
             <if test="orderId != null"> and returns.orders_id like concat('%',#{orderId},'%')</if>
         </where>

@@ -6,10 +6,10 @@
 
 
     <select id="selectAll" resultType="com.example.entity.GoodsStock">
-        select goods_stock.*, goods.name as goodsName from goods_stock
-        left join goods on goods_stock.goods_id = goods.id
+        select goods_stock.*, qa.name as goodsName from goods_stock
+        left join qa on goods_stock.goods_id = qa.id
         <where>
-            <if test="goodsName != null"> and goods.name like concat('%', #{goodsName}, '%')</if>
+            <if test="goodsName != null"> and qa.name like concat('%', #{goodsName}, '%')</if>
         </where>
     </select>
 

@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.common.LogAOP;
 import com.example.common.Result;
 import com.example.entity.Account;
 import com.example.entity.User;
@@ -30,9 +31,10 @@ public class WebController {
      * 登录
      */
     @PostMapping("/login")
+    //@LogAOP(title = "登录", content = "用户登录")
     public Result login(@RequestBody Account account) {
         Account ac = null;
-        if ("ADMIN".equals(account.getRole())) {
+        if ("管理员".equals(account.getRole())) {
             ac = adminService.login(account);
         } else {
             ac = userService.login(account);
@@ -44,6 +46,7 @@ public class WebController {
      * 注册
      */
     @PostMapping("/register")
+    //@LogAOP(title = "注册", content = "用户注册")
     public Result register(@RequestBody User user) {
         userService.register(user);
         return Result.success();

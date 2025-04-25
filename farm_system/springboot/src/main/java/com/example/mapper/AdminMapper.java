@@ -33,11 +33,16 @@ public interface AdminMapper {
     @Select("select * from admin where id = #{id}")
     Admin selectById(Integer id);
 
+
     /**
       * 查询所有
     */
     List<Admin> selectAll(Admin admin);
 
+
+    /**
+     * 根据用户名查询
+     */
     @Select("select * from admin where username = #{username}")
     Admin selectByUsername(String username);
 

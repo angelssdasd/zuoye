@@ -1,5 +1,7 @@
 package com.example.entity;
 
+import jakarta.persistence.Transient;
+
 /**
  * 角色用户父类
  */
@@ -17,6 +19,9 @@ public class Account {
     private String newPassword;
     /** 头像 */
     private String avatar;
+    /** token*/
+    @Transient
+    private String token;
 
 
     public Integer getId() {
@@ -75,4 +80,11 @@ public class Account {
         this.avatar = avatar;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

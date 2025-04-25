@@ -12,14 +12,14 @@
         </where>
     </select>-->
  <!--   <select id="selectAll" resultType="com.example.entity.ReceiveStock">
-        SELECT *,goods.name FROM receive_stock,goods where receive_stock.goods_id=goods.id
+        SELECT *,qa.name FROM receive_stock,qa where receive_stock.goods_id=qa.id
 
     </select>-->
     <select id="selectAll" resultType="com.example.entity.ReceiveStock">
-        SELECT *,goods.name as goodsName  from receive_stock
-        left join goods on receive_stock.goods_id = goods.id
+        SELECT *,qa.name as goodsName  from receive_stock
+        left join qa on receive_stock.goods_id = qa.id
         <where>
-            <if test="goodsName != null"> and goods.name like concat('%', #{goodsName}, '%')</if>
+            <if test="goodsName != null"> and qa.name like concat('%', #{goodsName}, '%')</if>
 
         </where>
     </select>

@@ -14,16 +14,16 @@
     </select>
 
     <insert id="insert" parameterType="com.example.entity.Supplier" useGeneratedKeys="true" keyProperty="supplierID">
-        INSERT INTO supplier (ID, supplierName, category, address, legalRepresentative, contactPerson,
+        INSERT INTO supplier (ID, supplierName, artifact, address, legalRepresentative, contactPerson,
                               contactPhone, faxNumber, email, remarks)
-        VALUES (#{supplierID}, #{supplierName}, #{category}, #{address}, #{legalRepresentative},
+        VALUES (#{supplierID}, #{supplierName}, #{artifact}, #{address}, #{legalRepresentative},
                 #{contactPerson}, #{contactPhone}, #{faxNumber}, #{email}, #{remarks})
     </insert>
 
     <!-- 根据ID更新供应商信息 -->
     <update id="updateById" parameterType="com.example.entity.Supplier">
         UPDATE supplier
-        SET supplierName = #{supplierName}, category = #{category}, address = #{address},
+        SET supplierName = #{supplierName}, artifact = #{artifact}, address = #{address},
             legalRepresentative = #{legalRepresentative}, contactPerson = #{contactPerson},
             contactPhone = #{contactPhone}, faxNumber = #{faxNumber}, email = #{email}, remarks = #{remarks}
         WHERE ID = #{supplierID}
