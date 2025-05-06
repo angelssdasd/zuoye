@@ -25,14 +25,14 @@ set LOG_FILE=restore_%datetime:~0,8%.log
 echo [%TIME%] 开始恢复操作 > "%LOG_FILE%" && type nul >> "%LOG_FILE%"
 
 REM 步骤1：验证备份文件有效性 -------------------------------
-echo [%TIME%] "验证全量备份文件:" "%FULL_BACKUP_PATH%" >> "%LOG_FILE%"
+echo [%TIME%] 验证全量备份文件: "%FULL_BACKUP_PATH%" >> "%LOG_FILE%"
 if not exist %FULL_BACKUP_PATH% (
     echo [%TIME%] "错误：全量备份文件不存在" >> "%LOG_FILE%"
     exit /b 1
 )
 
 if "%DIFF_BACKUP_PATH%" neq "" (
-    echo [%TIME%] "验证差异备份文件:" "%DIFF_BACKUP_PATH%" >> "%LOG_FILE%"
+    echo [%TIME%] 验证差异备份文件: "%DIFF_BACKUP_PATH%" >> "%LOG_FILE%"
     if not exist "%DIFF_BACKUP_PATH%" (
         echo [%TIME%] "错误：差异备份文件不存在" >> "%LOG_FILE%"
         exit /b 2
