@@ -1,49 +1,62 @@
 package com.example.task;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 @Component
 public class DatabaseBackupTask {
-
-    @Scheduled(fixedRate = 30000) // 每30秒执行一次任务
+   /* 定义一个名为DatabaseBackupTask的类，该类用于执行数据库备份任务
+   声明一个私有成员变量resourceLoader，用于加载绝对地址
+  */
+    private final ResourceLoader resourceLoader;
+    public DatabaseBackupTask(ResourceLoader resourceLoader) {
+            this.resourceLoader = resourceLoader;
+    }
+    // 使用@Scheduled注解定义一个定时任务，每天凌晨2点更新
+    @Scheduled(fixedRate = 30000)
     public void backupDatabase() {
-        // 确保 mysqldump.exe 路径存在并使用双引号包裹路径
-        String backupCommand = "\"F:\\mysql\\MySQL Server 8.0\\bin\\mysqldump.exe\" -u root -p123456 --databases farm_system > E:\\beifen\\bf.sql";
+        // 使用mysqldump工具备份数据库
+        try{
+            String osName = System.getProperty("os.name");
+            String command;
+            ProcessBuilder processBuilder;
+            if (osName.contains("Windows")) {
+                Resource resource = resourceLoader.getResource("classpath:BackUp_shell/full_backup_db.bat");
+                command = resource.getFile().getAbsolutePath();//获取脚本文件的绝对地址
+                processBuilder = new ProcessBuilder("cmd.exe", "/c", command);//执行脚本
+            }
+            else
+            {
+                Resource resource = resourceLoader.getResource("classpath:BackUp_shell/full_backup_db.sh");
+                command = resource.getFile().getAbsolutePath();//获取脚本文件的绝对地址
+                processBuilder = new ProcessBuilder("bash", command);
+                processBuilder.command().add(0, "chmod");
+                processBuilder.command().add(1, "+x");
 
-        try {
-            // 使用 cmd.exe /c 执行命令
-            Process process = Runtime.getRuntime().exec("cmd.exe /c " + backupCommand);
-
-            // 获取标准输出和标准错误流
-            BufferedReader inputReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
-            // 读取并打印标准输出
-            String line;
-            while ((line = inputReader.readLine()) != null) {
-                System.out.println(line); // 打印正常输出
+            }
+            Process process = processBuilder.start();
+            //读取脚本输出并打印到控制台
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
             }
 
-            // 读取并打印错误输出
-            while ((line = errorReader.readLine()) != null) {
-                System.err.println(line); // 打印错误输出
+            int Bitcode= process.waitFor();
+            if(Bitcode==0) {
+                System.out.println("数据库备份成功");
             }
-
-            // 等待命令完成并获取退出码
-            int exitCode = process.waitFor();
-            if (exitCode == 0) {
-                System.out.println("备份成功: " + System.currentTimeMillis());
-            } else {
-                System.err.println("备份失败，错误码: " + exitCode);
+            else {
+                System.out.println("数据库备份失败"+Bitcode);
             }
-
-        } catch (IOException | InterruptedException e) {
-            System.err.println("执行备份时出错: " + e.getMessage());
+        }catch (Exception e){
+            System.err.println(e.getMessage());
         }
     }
 }
