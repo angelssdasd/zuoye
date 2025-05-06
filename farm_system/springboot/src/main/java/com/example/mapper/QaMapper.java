@@ -1,6 +1,6 @@
 package com.example.mapper;
 
-import com.example.entity.Goods;
+import com.example.entity.Qa;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -11,33 +11,33 @@ import java.util.List;
  * 操作goods相关数据接口
 */
 @Mapper
-public interface GoodsMapper {
+public interface QaMapper {
 
     /**
       * 新增
     */
-    int insert(Goods goods);
+    int insert(Qa qa);
 
     /**
       * 删除
     */
-    @Delete("delete from goods where id = #{id}")
+    @Delete("delete from qa where qa_id = #{id}")
     int deleteById(Integer id);
 
     /**
       * 修改
     */
-    int updateById(Goods goods);
+    int updateById(Qa qa);
 
     /**
       * 根据ID查询
     */
-    @Select("select * from goods where id = #{id}")
-    Goods selectById(Integer id);
+    @Select("select * from qa where qa_id = #{id}")
+    Qa selectById(Integer id);
 
     /**
       * 查询所有
     */
-    List<Goods> selectAll(Goods goods);
+    List<Qa> selectAll(Qa qa);
 
 }

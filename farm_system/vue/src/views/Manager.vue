@@ -29,17 +29,17 @@
               <el-icon><Menu /></el-icon>
               <span>审核评论</span>
             </el-menu-item>
-          <el-sub-menu index="1" v-if="data.user.role === 'ADMIN'">
+          <el-sub-menu index="1" v-if="data.user.role === '管理员'">
             <template #title>
               <el-icon><Menu /></el-icon>
               <span>人员管理</span>
             </template>
-            <el-menu-item index="/category">
+            <el-menu-item index="/artifact">
               <el-icon><Menu /></el-icon>
               <span>海外文物用户管理</span>
             </el-menu-item>
       
-            <el-menu-item index="/goods">
+            <el-menu-item index="/qa">
               <el-icon><Goods /></el-icon>
               <span>知识问答字用户管理</span>
             </el-menu-item>
@@ -57,7 +57,7 @@
             </el-menu-item>
           </el-sub-menu>
       
-          <el-sub-menu index="3" v-if="data.user.role === 'ADMIN'">
+          <el-sub-menu index="3" v-if="data.user.role === '管理员'">
             <template #title>
               <el-icon><Memo /></el-icon>
               <span>日志记录</span>
@@ -75,7 +75,7 @@
               <span>备份记录</span>
             </el-menu-item>
           </el-sub-menu>
-            <el-menu-item index="/supplier" v-if="data.user.role === 'ADMIN'">
+            <el-menu-item index="/supplier" v-if="data.user.role === '管理员'">
               <el-icon><User /></el-icon>
               <span>数据库备份和恢复</span>
             </el-menu-item>

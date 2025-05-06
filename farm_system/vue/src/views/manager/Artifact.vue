@@ -12,11 +12,17 @@
         <el-button type="primary" @click="handleAdd">新增</el-button>
       </div>
       <el-table :data="data.tableData" stripe>
-        <el-table-column label="名称" prop="name"></el-table-column>
+        <el-table-column label="文物ID" prop="artifactId"></el-table-column>
+        <el-table-column label="文物名称" prop="name"></el-table-column>
+        <el-table-column label="年代" prop="era"></el-table-column>
+        <el-table-column label="文物类型" prop="type"></el-table-column>
+        <el-table-column label="详细介绍" prop="description"></el-table-column>
+        <el-table-column label="图片" prop="imageUrl"></el-table-column>
+        <el-table-column label="点赞数" prop="likes"></el-table-column>
         <el-table-column label="操作" header-align="center" width="160">
           <template #default="scope">
             <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+            <el-button type="danger" @click="handleDelete(scope.row.artifactId)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -28,8 +34,22 @@
 
     <el-dialog title="分类信息" width="40%" v-model="data.formVisible" :close-on-click-modal="false" destroy-on-close>
       <el-form :model="data.form" label-width="100px" style="padding-right: 50px">
-        <el-form-item label="名称" prop="name">
+        <el-form-item label="文物名称" prop="name">
           <el-input v-model="data.form.name" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="年代" prop="era">
+          <el-input v-model="data.form.era" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="文物类型" prop="type">
+          <el-input v-model="data.form.type" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="详细介绍" prop="description">
+          <el-input v-model="data.form.description" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="图片" prop="imageUrl">
+          <el-upload :action="uploadUrl" list-type="picture" :on-success="handleImgSuccess">
+            <el-button type="primary">上传图片</el-button>
+          </el-upload>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -48,26 +68,40 @@ import request from "@/utils/request";
 import {reactive} from "vue";
 import {ElMessageBox, ElMessage} from "element-plus";
 
+// const currentUserStr = localStorage.getItem("system-user");
+// let currentUserName = ""
+// if (currentUserStr) {
+//   const currentUser = JSON.parse(currentUserStr);
+//   currentUserName = currentUser.username;
+//   console.log("currentUserName:", currentUserName);
+// } else {
+//   console.log("没有找到用户信息");
+// }
+
+// 文件上传的接口地址
+const uploadUrl = import.meta.env.VITE_BASE_URL + '/files/upload'
+
 const data = reactive({
   pageNum: 1,
   pageSize: 10,
   total: 0,
   formVisible: false,
-  form: {},
+  form:{
+  },
   tableData: [],
   name: null
 })
 
 // 分页查询
 const load = () => {
-  request.get('/category/selectPage', {
+  request.get('/Artifact/selectPage', {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
       name: data.name
     }
   }).then(res => {
-    console.log(data.name)
+    console.log("Line105 data.name: ",data.name)
     data.tableData = res.data?.list
     data.total = res.data?.total
   })
@@ -75,19 +109,24 @@ const load = () => {
 
 // 新增
 const handleAdd = () => {
-  data.form = {}
+  data.form = {
+  }
   data.formVisible = true
 }
 
 // 编辑
 const handleEdit = (row) => {
-  data.form = JSON.parse(JSON.stringify(row))
+  console.log("row: ",row)
+  data.form = {
+    ...JSON.parse(JSON.stringify(row)),
+  }
   data.formVisible = true
 }
 
 // 新增保存
 const add = () => {
-  request.post('/category/add', data.form).then(res => {
+  //console.log(data.form)
+  request.post('/Artifact/add', data.form).then(res => {
     if (res.code === '200') {
       load()
       ElMessage.success('操作成功')
@@ -100,7 +139,7 @@ const add = () => {
 
 // 编辑保存
 const update = () => {
-  request.put('/category/update', data.form).then(res => {
+  request.put('/Artifact/update', data.form).then(res => {
     if (res.code === '200') {
       load()
       ElMessage.success('操作成功')
@@ -114,13 +153,16 @@ const update = () => {
 // 弹窗保存
 const save = () => {
   // data.form有id就是更新，没有就是新增
-  data.form.id ? update() : add()
+  data.form.artifactId ? update() : add()
 }
 
 // 删除
 const handleDelete = (id) => {
+  console.log("id: ",id)
   ElMessageBox.confirm('删除后数据无法恢复，您确定删除吗?', '删除确认', { type: 'warning' }).then(res => {
-    request.delete('/category/delete/' + id).then(res => {
+    request.delete('/Artifact/delete/' + id, {
+      params: { operator: data.form.operator }
+    }).then(res => {
       if (res.code === '200') {
         load()
         ElMessage.success('操作成功')
@@ -135,6 +177,11 @@ const handleDelete = (id) => {
 const reset = () => {
   data.name = null
   load()
+}
+
+// 处理文件上传的钩子
+const handleImgSuccess = (res) => {
+  data.form.imageUrl = res.data  // res.data就是文件上传返回的文件路径，获取到路径后赋值表单的属性
 }
 
 load()

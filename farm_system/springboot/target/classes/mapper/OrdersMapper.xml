@@ -5,8 +5,8 @@
 <mapper namespace="com.example.mapper.OrdersMapper">
 
     <select id="selectAll" resultType="com.example.entity.Orders">
-        select orders.*, goods.name as goodsName, goods.img as goodsImg, user.name as userName from orders
-        left join goods on orders.goods_id = goods.id
+        select orders.*, qa.name as goodsName, qa.img as goodsImg, user.name as userName from orders
+        left join qa on orders.goods_id = qa.id
         left join user on orders.user_id = user.id
         <where>
             <if test="orderNo != null"> and orders.order_no like concat('%', #{orderNo}, '%')</if>

@@ -13,7 +13,7 @@
       </div>
       <el-table :data="data.tableData" stripe>
         <el-table-column label="供应商名" prop="supplierName"></el-table-column>
-        <el-table-column label="类别" prop="category"></el-table-column>
+        <el-table-column label="类别" prop="artifact"></el-table-column>
         <el-table-column label="地址" prop="address"></el-table-column>
         <el-table-column label="法人代表" prop="legalRepresentative"></el-table-column>
         <el-table-column label="联系人" prop="contactPerson"></el-table-column>
@@ -39,8 +39,8 @@
         <el-form-item label="供应商名" prop="supplierName">
           <el-input v-model="data.form.supplierName" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="类别" prop="category">
-          <el-input v-model="data.form.category" autocomplete="off" />
+        <el-form-item label="类别" prop="artifact">
+          <el-input v-model="data.form.artifact" autocomplete="off" />
         </el-form-item>
         <el-form-item label="地址" prop="address">
           <el-input v-model="data.form.address" autocomplete="off" />

@@ -10,6 +10,11 @@ const request = axios.create({
 
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
+    const user = localStorage.getItem("system-user");
+    if(user){
+        config.headers['token'] = JSON.parse(user).token;
+    }
+    console.log("Local Storage system-user:", JSON.parse(user));
     return config
 }, error => {
     return Promise.reject(error)

@@ -12,23 +12,16 @@
         <el-button type="primary" @click="handleAdd">新增</el-button>
       </div>
       <el-table :data="data.tableData" stripe>
-        <el-table-column label="名称" prop="name"></el-table-column>
-        <el-table-column label="图片" prop="img">
-          <template #default="scope">
-            <el-image style="width: 50px; height: 50px; border-radius: 5px" :src="scope.row.img"
-                      :preview-src-list="[scope.row.img]" preview-teleported></el-image>
-          </template>
-        </el-table-column>
-        <el-table-column label="简介" prop="descr"></el-table-column>
-        <el-table-column label="特色" prop="specials"></el-table-column>
-        <el-table-column label="价格" prop="price"></el-table-column>
-        <el-table-column label="单位" prop="unit"></el-table-column>
-        <el-table-column label="库存" prop="store"></el-table-column>
-        <el-table-column label="分类" prop="categoryName"></el-table-column>
+        <el-table-column label="问答ID" prop="qaId"></el-table-column>
+        <el-table-column label="问题内容" prop="question"></el-table-column>
+        <el-table-column label="答案内容" prop="answer"></el-table-column>
+        <el-table-column label="提问时间" prop="askTime"></el-table-column>
+        <el-table-column label="用户ID" prop="userId"></el-table-column>
+        <el-table-column label="关联文物ID" prop="artifactId"></el-table-column>
         <el-table-column label="操作" header-align="center" width="160">
           <template #default="scope">
             <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+            <el-button type="danger" @click="handleDelete(scope.row.qaId)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -38,32 +31,30 @@
       <el-pagination @current-change="load" background layout="prev, pager, next" v-model:page-size="data.pageSize" v-model:current-page="data.pageNum" :total="data.total"/>
     </div>
 
-    <el-dialog title="农产品信息" width="40%" v-model="data.formVisible" :close-on-click-modal="false" destroy-on-close>
+    <el-dialog title="问答信息" width="40%" v-model="data.formVisible" :close-on-click-modal="false" destroy-on-close>
       <el-form :model="data.form" label-width="100px" style="padding-right: 50px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="data.form.name" autocomplete="off" />
+        <el-form-item label="问答内容" prop="question">
+          <el-input type="textarea" v-model="data.form.question" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="图片" prop="img">
-          <el-upload :action="uploadUrl" list-type="picture" :on-success="handleImgSuccess">
-            <el-button type="primary">上传图片</el-button>
-          </el-upload>
+        <el-form-item label="答案内容" prop="answer">
+          <el-input type="textarea" v-model="data.form.answer" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="描述" prop="descr">
-          <el-input type="textarea" v-model="data.form.descr" autocomplete="off" />
+        <el-form-item label="用户ID" prop="userId">
+          <el-input v-model="data.form.userId" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="特色" prop="specials">
-          <el-input v-model="data.form.specials" autocomplete="off" />
+        <el-form-item label="关联文物ID" prop="artifactId">
+          <el-input v-model="data.form.artifactId" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="单价" prop="price">
-          <el-input v-model="data.form.price" autocomplete="off" />
+        <el-form-item label="提问时间">
+          <el-col :span="11">
+            <el-date-picker
+                v-model="data.form.askTime"
+                type="datetime"
+                value-format="YYYY-MM-DD HH:mm:ss"
+            />
+          </el-col>
         </el-form-item>
-        <el-form-item label="单位" prop="unit">
-          <el-input v-model="data.form.unit" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="库存量" prop="store">
-          <el-input v-model="data.form.store" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="分类" prop="categoryId">
+<!--        <el-form-item label="分类" prop="categoryId">
           <el-select v-model="data.form.categoryId" placeholder="请选择分类" style="width: 100%">
             <el-option
                 v-for="item in data.categoryList"
@@ -72,7 +63,7 @@
                 :value="item.id"
             />
           </el-select>
-        </el-form-item>
+        </el-form-item>-->
       </el-form>
       <template #footer>
       <span class="dialog-footer">
@@ -90,20 +81,31 @@ import request from "@/utils/request";
 import {reactive} from "vue";
 import {ElMessageBox, ElMessage} from "element-plus";
 
+// const currentUserStr = localStorage.getItem("system-user");
+// let currentUserName = ""
+// if (currentUserStr) {
+//   const currentUser = JSON.parse(currentUserStr);
+//   currentUserName = currentUser.username;
+//   console.log("currentUserName:", currentUserName);
+// } else {
+//   console.log("没有找到用户信息");
+// }
+
 const data = reactive({
   user: JSON.parse(localStorage.getItem('system-user') || '{}'),
   pageNum: 1,
   pageSize: 10,
   total: 0,
   formVisible: false,
-  form: {},
+  form:{
+  },
   tableData: [],
   name: null,
   categoryList: []
 })
 
 // 获取到分类的数据
-request.get('/category/selectAll').then(res => {
+request.get('/qa/selectAll').then(res => {
   data.categoryList = res.data
 })
 
@@ -112,7 +114,7 @@ const uploadUrl = import.meta.env.VITE_BASE_URL + '/files/upload'
 
 // 分页查询
 const load = () => {
-  request.get('/goods/selectPage', {
+  request.get('/qa/selectPage', {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
@@ -127,19 +129,22 @@ const load = () => {
 
 // 新增
 const handleAdd = () => {
-  data.form = {}
+  data.form = {
+  }
   data.formVisible = true
 }
 
 // 编辑
 const handleEdit = (row) => {
-  data.form = JSON.parse(JSON.stringify(row))
+  data.form = {
+    ...JSON.parse(JSON.stringify(row)),
+  }
   data.formVisible = true
 }
 
 // 新增保存
 const add = () => {
-  request.post('/goods/add', data.form).then(res => {
+  request.post('/qa/add', data.form).then(res => {
     if (res.code === '200') {
       load()
       ElMessage.success('操作成功')
@@ -152,7 +157,7 @@ const add = () => {
 
 // 编辑保存
 const update = () => {
-  request.put('/goods/update', data.form).then(res => {
+  request.put('/qa/update', data.form).then(res => {
     if (res.code === '200') {
       load()
       ElMessage.success('操作成功')
@@ -166,13 +171,16 @@ const update = () => {
 // 弹窗保存
 const save = () => {
   // data.form有id就是更新，没有就是新增
-  data.form.id ? update() : add()
+  data.form.operator = currentUserName
+  data.form.qaId ? update() : add()
 }
 
 // 删除
 const handleDelete = (id) => {
   ElMessageBox.confirm('删除后数据无法恢复，您确定删除吗?', '删除确认', { type: 'warning' }).then(res => {
-    request.delete('/goods/delete/' + id).then(res => {
+    request.delete('/qa/delete/' + id, {
+      params: { operator: data.form.operator }
+    }).then(res => {
       if (res.code === '200') {
         load()
         ElMessage.success('操作成功')
