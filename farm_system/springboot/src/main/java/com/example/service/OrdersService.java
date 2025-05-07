@@ -2,11 +2,9 @@ package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.db.sql.Order;
-import com.example.entity.Goods;
+import com.example.entity.Qa;
 import com.example.entity.Orders;
 import com.example.entity.Returns;
-import com.example.exception.CustomException;
 import com.example.mapper.OrdersMapper;
 import com.example.mapper.ReturnsMapper;
 import com.github.pagehelper.PageHelper;
@@ -26,7 +24,7 @@ public class OrdersService {
     @Resource
     private OrdersMapper ordersMapper;
     @Resource
-    private GoodsService goodsService;
+    private QaService qaService;
     @Resource
     private ReturnsMapper returnsMapper;
 
@@ -39,8 +37,8 @@ public class OrdersService {
 
         orders.setOrderNo(IdUtil.fastSimpleUUID());  // 唯一的订单编号
         // 扣减库存
-        Goods goods = goodsService.selectById(orders.getGoodsId());
-        if (goods == null) {
+        Qa qa = qaService.selectById(orders.getGoodsId());
+        /*if (goods == null) {
             throw new CustomException("商品不存在");
         }
         int store = goods.getStore() - orders.getNum();
@@ -49,7 +47,7 @@ public class OrdersService {
         }
         goods.setStore(store);
         goodsService.updateById(goods);
-        ordersMapper.insert(orders);
+        ordersMapper.insert(orders);*/
     }
 
     /**

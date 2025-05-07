@@ -6,7 +6,7 @@ package com.example.entity;
 public class Admin extends Account {
 
     /** ID */
-    private Integer id;
+    private Integer userId;
     /** 用户名 */
     private String username;
     /** 密码 */
@@ -17,15 +17,25 @@ public class Admin extends Account {
     private String avatar;
     /** 角色标识 */
     private String role;
+    /** 操作ID*/
+    private String operatorId;
+
+    public String getOperatorId() {
+        return operatorId;
+    }
+
+    public void setOperatorId(String operatorId) {
+        this.operatorId = operatorId;
+    }
 
     @Override
     public Integer getId() {
-        return id;
+        return userId;
     }
 
     @Override
     public void setId(Integer id) {
-        this.id = id;
+        this.userId = id;
     }
 
     @Override

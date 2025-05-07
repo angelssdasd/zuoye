@@ -1,8 +1,6 @@
 package com.example.service;
 
-import com.example.entity.Goods;
 import com.example.entity.GoodsStock;
-import com.example.entity.ReceiveStock;
 import com.example.mapper.GoodsStockMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -22,7 +20,7 @@ public class GoodsStockService {
     private GoodsStockMapper goodsStockMapper;
 
     @Resource
-    private GoodsService goodsService;
+    private QaService qaService;
     @Resource ReceiveStockService receive_service;
 
     /**
@@ -41,7 +39,7 @@ public class GoodsStockService {
 
        GoodsStock gt= goodsStockMapper.selectById(id);
         // 查询到当前进货的商品信息
-        ReceiveStock rt=new ReceiveStock();
+       /* ReceiveStock rt=new ReceiveStock();
         rt.setGoodsId(gt.getGoodsId());
         rt.setChannel(gt.getChannel());
         rt.setReceiveName(receiveName);
@@ -53,7 +51,7 @@ public class GoodsStockService {
         goods.setStore(goods.getStore() + gt.getNum());  // 进货后的农产品数量
         goodsService.updateById(goods);  // 更新数据
         receive_service.add(rt);
-        goodsStockMapper.deleteById(id);
+        goodsStockMapper.deleteById(id);*/
     }
     /**
      * 删除

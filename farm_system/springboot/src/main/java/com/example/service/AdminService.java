@@ -1,6 +1,7 @@
 package com.example.service;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.example.common.JwtTokenUtils;
 import com.example.entity.Account;
 import com.example.entity.Admin;
 import com.example.exception.CustomException;
@@ -87,6 +88,10 @@ public class AdminService {
         if (!account.getPassword().equals(dbAdmin.getPassword())) {
             throw new CustomException("账号或密码错误");
         }
+
+        //生成Token
+        String token = JwtTokenUtils.genToken(dbAdmin.getUsername(), account.getPassword());
+        dbAdmin.setToken(token);
         return dbAdmin;
     }
 
@@ -105,4 +110,7 @@ public class AdminService {
         adminMapper.updateById(dbAdmin);
     }
 
+    public Admin findByUsername(String username) {
+        return adminMapper.selectByUsername(username);
+    }
 }

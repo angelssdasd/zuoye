@@ -12,8 +12,8 @@
         </el-form-item>
         <el-form-item prop="role">
           <el-select size="large" style="width: 100%" v-model="data.form.role">
-            <el-option value="ADMIN" label="管理员"></el-option>
-            <el-option value="USER" label="审核员"></el-option>
+            <el-option value="管理员" label="管理员"></el-option>
+            <el-option value="审核员" label="审核员"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -36,7 +36,7 @@
   import router from "@/router";
 
   const data = reactive({
-    form: { role: 'ADMIN' },
+    form: { role: '管理员' },
     rules: {
       username: [
         { required: true, message: '请输入账号', trigger: 'blur' },
