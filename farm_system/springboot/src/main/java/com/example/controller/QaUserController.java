@@ -13,7 +13,7 @@ import java.util.List;
  * 前端操作接口
  **/
 @RestController
-@RequestMapping("/qa")
+@RequestMapping("/qaUser")
 public class QaUserController {
 
     @Resource
