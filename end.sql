@@ -1,4 +1,10 @@
--- 知识问答，海外文物知识，掌上客户端三个子系统的用户表
+-- 创建数据库 manage
+CREATE DATABASE IF NOT EXISTS manage
+    DEFAULT CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+-- 使用数据库 manage
+USE manage;
 CREATE TABLE user (
                       user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '用户ID(主键)',
                       username VARCHAR(50) NOT NULL UNIQUE COMMENT '用户名',
@@ -38,8 +44,8 @@ CREATE TABLE artifact (
                           type VARCHAR(50) NOT NULL COMMENT '文物类型（如瓷器、书画等）',
                           description TEXT COMMENT '详细介绍',
                           image_url VARCHAR(255) COMMENT '图片存储路径',
-                          likes INT DEFAULT 0 COMMENT '点赞数'，
-                              feature TEXT NOT NULL COMMENT '特征向量（字符串存储）'
+                          likes INT DEFAULT 0 COMMENT '点赞数',
+                          feature TEXT NOT NULL COMMENT '特征向量（字符串存储）'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文物表';
 
 -- 点赞表（记录当前用户是否点赞当前显示文物）
@@ -75,17 +81,17 @@ CREATE TABLE QA (
                     history_id INT NOT NULL,
                     content TEXT NOT NULL,
                     ask_time DATETIME NOT NULL,
-                    user_id INT,
-                    FOREIGN KEY (user_id) REFERENCES User(user_id)
+                    user_id INT
+
 );
 
 -- 主题记录表
 CREATE TABLE Topic (
                        user_id INT NOT NULL,
                        history_id INT NOT NULL,
-                       topic VARCHAR(255),
-                       PRIMARY KEY (user_id, history_id),
-                       FOREIGN KEY (user_id) REFERENCES User(user_id)
+                       topic VARCHAR(255)
+
+
 );
 
 -- 审核记录表（审核员操作记录）
