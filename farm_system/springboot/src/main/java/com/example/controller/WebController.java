@@ -5,6 +5,7 @@ import com.example.common.Result;
 import com.example.entity.Account;
 import com.example.entity.User;
 import com.example.service.AdminService;
+import com.example.service.ReviewerService;
 import com.example.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ public class WebController {
     private AdminService adminService;
     @Resource
     private UserService userService;
+    @Resource
+    private UserService ReviewerService;
 
 
     /**
@@ -37,7 +40,7 @@ public class WebController {
         if ("管理员".equals(account.getRole())) {
             ac = adminService.login(account);
         } else {
-            ac = userService.login(account);
+            ac = ReviewerService.login(account);
              ac.setId(1);
             ac.setRole("USER");
         }
