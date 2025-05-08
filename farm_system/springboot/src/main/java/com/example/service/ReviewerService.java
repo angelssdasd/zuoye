@@ -6,13 +6,16 @@ import com.example.entity.Account;
 import com.example.entity.Admin;
 import com.example.entity.Reviewer;
 import com.example.entity.Reviewer;
+import com.example.entity.User;
 import com.example.exception.CustomException;
 import com.example.mapper.AdminMapper;
 import com.example.mapper.ReviewerMapper;
+import com.example.mapper.UserMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import com.example.entity.Account;
 
 import java.util.List;
 

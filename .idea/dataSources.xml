@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="farm_system@localhost" uuid="84999dec-e3f6-45ed-a2bf-5457c32d0426">
+    <data-source source="LOCAL" name="manage@localhost" uuid="4105ee62-02c0-464f-85dd-1a0f07a50774">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/farm_system/springboot/src/main/resources/application.yml</remarks>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/farm_system</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/manage?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true&amp;useSSL=false&amp;serverTimezone=GMT&amp;allowPublicKeyRetrieval=true</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="@123.56.94.39" uuid="f751dd03-6fbe-4fdc-b3da-31f345791f86">
+    <data-source source="LOCAL" name="@localhost" uuid="c949759e-3eff-4d69-b7ff-1d5afe1236fc">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://123.56.94.39:3306</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

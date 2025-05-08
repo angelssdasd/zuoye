@@ -1,6 +1,5 @@
 package com.example.mapper;
 
-import com.example.entity.Admin;
 import com.example.entity.Reviewer;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
@@ -44,7 +43,7 @@ public interface ReviewerMapper {
     /**
      * 根据用户名查询
      */
-    @Select("select * from admin where username = #{username}")
-    Reviewer  selectByUsername(String username);
+    @Select("select * from reviewer where username = #{username}")
+    Reviewer selectByUsername(String username);
 
 }
