@@ -1,8 +1,10 @@
 package com.example.controller;
 
 import com.example.common.Result;
-import com.example.entity.Qa;
-import com.example.service.QaService;
+import com.example.entity.Admin;
+import com.example.entity.Reviewer;
+import com.example.service.AdminService;
+import com.example.service.ReviewerService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -10,21 +12,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 前端操作接口
+ * 管理员前端操作接口
  **/
 @RestController
-@RequestMapping("/qa")
-public class QaUserController {
+@RequestMapping("/reviewer")
+public class ReviewerController {
 
     @Resource
-    private QaService qaService;
+    private ReviewerService reviewerService;
 
     /**
      * 新增
      */
     @PostMapping("/add")
-    public Result add(@RequestBody Qa qa) {
-        qaService.add(qa);
+    public Result add(@RequestBody Reviewer reviewer) {
+        reviewerService.add(reviewer);
         return Result.success();
     }
 
@@ -32,9 +34,8 @@ public class QaUserController {
      * 删除
      */
     @DeleteMapping("/delete/{id}")
-    public Result deleteById(@PathVariable Integer id,
-                             @RequestParam(required = false) String operator) {
-        qaService.deleteById(id);
+    public Result deleteById(@PathVariable Integer id) {
+        reviewerService.deleteById(id);
         return Result.success();
     }
 
@@ -42,8 +43,8 @@ public class QaUserController {
      * 修改
      */
     @PutMapping("/update")
-    public Result updateById(@RequestBody Qa qa) {
-        qaService.updateById(qa);
+    public Result updateById(@RequestBody Admin admin) {
+        reviewerService.updateById(reviewer);
         return Result.success();
     }
 
@@ -52,16 +53,16 @@ public class QaUserController {
      */
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
-        Qa qa = qaService.selectById(id);
-        return Result.success(qa);
+        Reviewer reviewer = reviewerService.selectById(id);
+        return Result.success(reviewer);
     }
 
     /**
      * 查询所有
      */
     @GetMapping("/selectAll")
-    public Result selectAll(Qa qa) {
-        List<Qa> list = qaService.selectAll(qa);
+    public Result selectAll(Admin admin) {
+        List<Admin> list = reviewerService.selectAll(reviewer);
         return Result.success(list);
     }
 
@@ -69,10 +70,10 @@ public class QaUserController {
      * 分页查询
      */
     @GetMapping("/selectPage")
-    public Result selectPage(Qa qa,
+    public Result selectPage(Reviewer reviewer,
                              @RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageInfo<Qa> page = qaService.selectPage(qa, pageNum, pageSize);
+        PageInfo<Admin> page = reviewerService.selectPage(reviewer, pageNum, pageSize);
         return Result.success(page);
     }
 

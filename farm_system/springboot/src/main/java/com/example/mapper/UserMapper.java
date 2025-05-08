@@ -19,7 +19,7 @@ public interface UserMapper {
     /**
       * 删除
     */
-    @Delete("delete from user where id = #{id}")
+    @Delete("delete from user where user_id = #{id}")
     int deleteById(Integer id);
 
     /**
@@ -30,7 +30,7 @@ public interface UserMapper {
     /**
       * 根据ID查询
     */
-    @Select("select * from user where id = #{id}")
+    @Select("select * from user where user_id = #{id}")
     User selectById(Integer id);
 
     /**

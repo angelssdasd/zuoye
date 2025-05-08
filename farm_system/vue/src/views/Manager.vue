@@ -136,6 +136,6 @@ const logout = () => {
   color: #1967e3;
 }
 :deep(th)  {
-  color: #333;
+color: #333;
 }
 </style>

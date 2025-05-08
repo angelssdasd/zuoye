@@ -32,9 +32,9 @@ public class UserService {
         if (ObjectUtil.isEmpty(user.getPassword())) {
             user.setPassword("123");
         }
-        if (ObjectUtil.isEmpty(user.getName())) {
-            user.setName(user.getUsername());
-        }
+//        if (ObjectUtil.isEmpty(user.getName())) {
+//            user.setName(user.getUsername());
+//        }
         user.setRole("USER");
         userMapper.insert(user);
     }
