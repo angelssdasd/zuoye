@@ -38,6 +38,8 @@ public class WebController {
             ac = adminService.login(account);
         } else {
             ac = userService.login(account);
+             ac.setId(1);
+            ac.setRole("USER");
         }
         return Result.success(ac);
     }
