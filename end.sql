@@ -24,7 +24,12 @@ CREATE TABLE admin (
                        role ENUM('管理员') NOT NULL DEFAULT '管理员' COMMENT '用户角色（固定）',
                        permission_status ENUM('正常', '受限') NOT NULL DEFAULT '正常' COMMENT '权限状态'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='管理员表';
-
+INSERT INTO admin (username, password, email)
+VALUES (
+           'admin',
+           '123',
+           'admin@example.com'
+       );
 -- 审核员表（专用于审核员角色）
 CREATE TABLE reviewer (
                           user_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '用户ID(主键)',
@@ -102,7 +107,12 @@ CREATE TABLE review (
                         review_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '审核时间',
                         reviewer_id INT NOT NULL COMMENT '审核员ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='审核记录表';
-
+INSERT INTO review (content_type, comment_id, post_id, result, reviewer_id) VALUES
+                                                                                ('评论', 101, NULL, '通过', 1),
+                                                                                ('动态', NULL, 201, '未通过', 2),
+                                                                                ('媒体', NULL, NULL, '通过', 3),
+                                                                                ('评论', 102, NULL, '未通过', 2),
+                                                                                ('动态', NULL, 202, '通过', 1);
 -- 日志表（系统操作日志）
 CREATE TABLE log (
                      log_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '日志ID(主键)',

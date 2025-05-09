@@ -37,15 +37,10 @@
             <el-menu-item index="/artifact">
               <el-icon><Menu /></el-icon>
               <span>海外文物用户管理</span>
-            </el-menu-item>
-      
+            </el-menu-item>      
             <el-menu-item index="/qa">
               <el-icon><Goods /></el-icon>
               <span>知识问答字用户管理</span>
-            </el-menu-item>
-            <el-menu-item index="/goodsStock">
-              <el-icon><SoldOut /></el-icon>
-              <span>掌上客户端用户管理</span>
             </el-menu-item>
             <el-menu-item index="/goodsStock">
               <el-icon><SoldOut /></el-icon>
@@ -62,7 +57,7 @@
               <el-icon><Memo /></el-icon>
               <span>日志记录</span>
             </template>
-            <el-menu-item index="/member">
+            <el-menu-item index="/relog">
               <el-icon><User /></el-icon>
               <span>审核员日志记录</span>
             </el-menu-item>
