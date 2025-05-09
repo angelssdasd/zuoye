@@ -65,7 +65,7 @@
               <el-icon><User /></el-icon>
               <span>系统日志</span>
             </el-menu-item>
-            <el-menu-item index="/user">
+            <el-menu-item index="/backup">
               <el-icon><User /></el-icon>
               <span>备份记录</span>
             </el-menu-item>

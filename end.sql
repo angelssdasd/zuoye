@@ -129,6 +129,13 @@ CREATE TABLE backup (
                         file_path VARCHAR(255) NOT NULL COMMENT '备份文件路径',
                         operator_id INT NOT NULL COMMENT '操作员ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='备份记录表';
+INSERT INTO backup (backup_time, file_path, operator_id) VALUES
+                                                             (NOW(), '/backup/20240509_backup1.sql', 101),
+                                                             (NOW(), '/backup/20240509_backup2.sql', 102),
+                                                             (NOW(), '/backup/20240508_backup3.sql', 101),
+                                                             ('2024-12-01 10:30:00', '/backup/20241201_backup4.sql', 103),
+                                                             ('2025-01-15 14:45:00', '/backup/20250115_backup5.sql', 104);
+
 INSERT INTO log (operation_type, operation_detail, operation_time, operator_id) VALUES
                                                                                     ('增', '新增用户：test_user', NOW() - INTERVAL 5 MINUTE, 1001),
                                                                                     ('删', '删除角色：guest_role', NOW() - INTERVAL 4 MINUTE, 1002),
