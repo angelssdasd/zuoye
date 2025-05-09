@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.common.LogAOP;
 import com.example.common.Result;
 import com.example.entity.Admin;
 import com.example.entity.Reviewer;
@@ -25,6 +26,7 @@ public class ReviewerController {
      * 新增
      */
     @PostMapping("/add")
+    @LogAOP(title = "增", content = "新增审核员用户信息")
     public Result add(@RequestBody Reviewer reviewer) {
         reviewerService.add(reviewer);
         return Result.success();
@@ -34,6 +36,7 @@ public class ReviewerController {
      * 删除
      */
     @DeleteMapping("/delete/{id}")
+    @LogAOP(title = "删", content = "删除审核员用户信息")
     public Result deleteById(@PathVariable Integer id) {
         reviewerService.deleteById(id);
         return Result.success();
@@ -43,7 +46,8 @@ public class ReviewerController {
      * 修改
      */
     @PutMapping("/update")
-    public Result updateById(@RequestBody Admin admin) {
+    @LogAOP(title = "改", content = "修改审核员用户信息")
+    public Result updateById(@RequestBody Reviewer reviewer) {
         reviewerService.updateById(reviewer);
         return Result.success();
     }
@@ -61,8 +65,8 @@ public class ReviewerController {
      * 查询所有
      */
     @GetMapping("/selectAll")
-    public Result selectAll(Admin admin) {
-        List<Admin> list = reviewerService.selectAll(reviewer);
+    public Result selectAll(Reviewer reviewer) {
+        List<Reviewer> list = reviewerService.selectAll(reviewer);
         return Result.success(list);
     }
 
@@ -73,7 +77,7 @@ public class ReviewerController {
     public Result selectPage(Reviewer reviewer,
                              @RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageInfo<Admin> page = reviewerService.selectPage(reviewer, pageNum, pageSize);
+        PageInfo<Reviewer> page = reviewerService.selectPage(reviewer, pageNum, pageSize);
         return Result.success(page);
     }
 

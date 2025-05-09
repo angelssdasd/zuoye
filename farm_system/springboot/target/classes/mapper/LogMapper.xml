@@ -10,7 +10,6 @@
         <where>
             <if test="operationType != null"> and operationType like concat('%', #{operationType}, '%')</if>
         </where>
-        order by id desc
     </select>
 
     <insert id="insert" parameterType="com.example.entity.Log" useGeneratedKeys="true"

@@ -10,12 +10,11 @@
         <where>
             <if test="username != null"> and name like concat('%', #{username}, '%')</if>
         </where>
-        order by user_id desc
     </select>
 
     <insert id="insert" parameterType="com.example.entity.Reviewer" useGeneratedKeys="true" keyProperty="userId">
-        insert into reviewer(username, password, email, register_time, role, permission_status)
-        values (#{username}, #{password}, #{email}, #{registerTime}, #{role}, #{permissionStatus})
+        insert into reviewer(username, password, email, permission_status)
+        values (#{username}, #{password}, #{email}, #{permissionStatus})
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.Admin">
@@ -23,8 +22,6 @@
                          username = #{username},
                          password = #{password},
                          email = #{email},
-                         register_time = #{registerTime},
-                         role = #{role},
                          permission_status = #{permissionStatus}
         where user_id = #{userId}
     </update>

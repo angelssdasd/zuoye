@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.common.LogAOP;
 import com.example.common.Result;
 import com.example.entity.User;
 import com.example.service.UserService;
@@ -23,6 +24,7 @@ public class UserController {
      * 新增
      */
     @PostMapping("/add")
+    @LogAOP(title = "增", content = "新增普通用户信息")
     public Result add(@RequestBody User user) {
         userService.add(user);
         return Result.success();
@@ -32,6 +34,7 @@ public class UserController {
      * 删除
      */
     @DeleteMapping("/delete/{id}")
+    @LogAOP(title = "删", content = "删除普通用户信息")
     public Result deleteById(@PathVariable Integer id) {
         userService.deleteById(id);
         return Result.success();
@@ -41,6 +44,7 @@ public class UserController {
      * 修改
      */
     @PutMapping("/update")
+    @LogAOP(title = "改", content = "修改普通用户信息")
     public Result updateById(@RequestBody User user) {
         userService.updateById(user);
         return Result.success();

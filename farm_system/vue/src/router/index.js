@@ -24,6 +24,7 @@ const router = createRouter({
         { path: 'goodreceive', component: () => import('@/views/manager/GoodsReceive.vue')},
         { path: 'receive', component: () => import('@/views/manager/receive.vue')},
         { path: 'returns', component: () => import('@/views/manager/Ordersreturn.vue')},
+        { path: 'reviewer', component: () => import('@/views/manager/Reviewer.vue')},
       ]
     },
     { path: '/login', component: () => import('@/views/Login.vue')},

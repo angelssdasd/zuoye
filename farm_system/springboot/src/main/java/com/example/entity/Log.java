@@ -4,7 +4,7 @@ public class Log {
     private Integer logId;
     private String  operationType;
     private String  operationDetail;
-    private String operationTime;  // 建议用 LocalDateTime 映射 DATETIME
+    private String operationTime;
     private Integer operatorId;            // 对应表中的 operator_id
 
     // 无参构造 & 全参构造

@@ -20,20 +20,20 @@ public interface LogMapper {
     /**
       * 删除
     */
-    @Delete("delete from log where id = #{id}")
+    @Delete("delete from log where log_id = #{id}")
     int deleteById(Integer id);
 
 
     /**
       * 根据ID查询
     */
-    @Select("select * from log where id = #{id}")
+    @Select("select * from log where log_id = #{id}")
     Log selectById(Integer id);
 
     /**
       * 查询所有
     */
-    List<Log> selectAll(Log admin);
+    List<Log> selectAll(Log log);
 
     @Select("select * from log where username = #{username}")
     Log selectByUsername(String username);

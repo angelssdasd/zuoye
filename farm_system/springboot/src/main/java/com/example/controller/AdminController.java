@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.common.LogAOP;
 import com.example.common.Result;
 import com.example.entity.Admin;
 import com.example.service.AdminService;
@@ -23,6 +24,7 @@ public class AdminController {
      * 新增
      */
     @PostMapping("/add")
+    @LogAOP(title = "增", content = "新增管理员用户信息")
     public Result add(@RequestBody Admin admin) {
         adminService.add(admin);
         return Result.success();
@@ -32,6 +34,7 @@ public class AdminController {
      * 删除
      */
     @DeleteMapping("/delete/{id}")
+    @LogAOP(title = "删", content = "删除管理员用户信息")
     public Result deleteById(@PathVariable Integer id) {
         adminService.deleteById(id);
         return Result.success();
@@ -41,6 +44,7 @@ public class AdminController {
      * 修改
      */
     @PutMapping("/update")
+    @LogAOP(title = "改", content = "修改管理员用户信息")
     public Result updateById(@RequestBody Admin admin) {
         adminService.updateById(admin);
         return Result.success();

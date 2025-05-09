@@ -34,11 +34,22 @@
               <el-icon><Menu /></el-icon>
               <span>人员管理</span>
             </template>
-            <el-menu-item index="/artifact">
+            <el-menu-item index="/admin">
+              <el-icon><SoldOut /></el-icon>
+              <span>管理员管理</span>
+            </el-menu-item>
+            <el-menu-item index="/reviewer">
+              <el-icon><SoldOut /></el-icon>
+              <span>审核员管理</span>
+            </el-menu-item>
+            <el-menu-item index="/user">
+              <el-icon><SoldOut /></el-icon>
+              <span>用户管理</span>
+            </el-menu-item>
+<!--            <el-menu-item index="/artifact">
               <el-icon><Menu /></el-icon>
               <span>海外文物用户管理</span>
             </el-menu-item>
-      
             <el-menu-item index="/qa">
               <el-icon><Goods /></el-icon>
               <span>知识问答字用户管理</span>
@@ -50,11 +61,7 @@
             <el-menu-item index="/goodsStock">
               <el-icon><SoldOut /></el-icon>
               <span>审核员管理</span>
-            </el-menu-item>
-            <el-menu-item index="/goodsStock">
-              <el-icon><SoldOut /></el-icon>
-              <span>管理员管理</span>
-            </el-menu-item>
+            </el-menu-item>-->
           </el-sub-menu>
       
           <el-sub-menu index="3" v-if="data.user.role === '管理员'">
@@ -112,7 +119,7 @@ const data = reactive({
   user: JSON.parse(localStorage.getItem('system-user') || '{}')
 })
 
-if (!data.user?.id) {
+if (!data.user?.userId) {
   ElMessage.error('请登录！')
   router.push('/login')
 }

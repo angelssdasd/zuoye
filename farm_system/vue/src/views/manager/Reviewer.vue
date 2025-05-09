@@ -96,7 +96,7 @@ const data = reactive({
 
 // 分页查询
 const load = () => {
-  request.get('/admin/selectPage', {
+  request.get('/reviewer/selectPage', {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
@@ -128,7 +128,7 @@ const handleEdit = (row) => {
 // 新增保存
 const add = () => {
   //console.log(data.form)
-  request.post('/admin/add', data.form).then(res => {
+  request.post('/reviewer/add', data.form).then(res => {
     if (res.code === '200') {
       load()
       ElMessage.success('操作成功')
@@ -141,7 +141,7 @@ const add = () => {
 
 // 编辑保存
 const update = () => {
-  request.put('/admin/update', data.form).then(res => {
+  request.put('/reviewer/update', data.form).then(res => {
     if (res.code === '200') {
       load()
       ElMessage.success('操作成功')
@@ -162,7 +162,7 @@ const save = () => {
 const handleDelete = (userId) => {
   console.log("userId: ",userId)
   ElMessageBox.confirm('删除后数据无法恢复，您确定删除吗?', '删除确认', { type: 'warning' }).then(res => {
-    request.delete('/admin/delete/' + userId, {
+    request.delete('/reviewer/delete/' + userId, {
       params: { operator: data.form.operator }
     }).then(res => {
       if (res.code === '200') {

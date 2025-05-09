@@ -78,9 +78,9 @@ public class ReviewerService {
     /**
      * 分页查询
      */
-    public PageInfo<Admin> selectPage(Reviewer reviewer, Integer pageNum, Integer pageSize) {
+    public PageInfo<Reviewer> selectPage(Reviewer reviewer, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Reviewer > list = reviewerMapper.selectAll(reviewer);
+        List<Reviewer> list = reviewerMapper.selectAll(reviewer);
         return PageInfo.of(list);
     }
 
