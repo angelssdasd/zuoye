@@ -84,14 +84,12 @@ CREATE TABLE QA (
                     user_id INT
 
 );
-
 -- 主题记录表
 CREATE TABLE Topic (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
                        user_id INT NOT NULL,
                        history_id INT NOT NULL,
                        topic VARCHAR(255)
-
-
 );
 
 -- 审核记录表（审核员操作记录）
