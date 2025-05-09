@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import com.example.common.Result;
+import com.example.entity.Returns;
 import com.example.entity.review;
 import com.example.service.ReviewService;
 import com.github.pagehelper.PageInfo;
@@ -14,15 +16,16 @@ public class ReviewController {
     @Resource
     private ReviewService reviewService;
 
-    @GetMapping("/selectPage")
-    public PageInfo<review> list(
-            @RequestParam int pageNum, // 注意这里首字母大写
-            @RequestParam int pageSize, // 注意这里首字母大写
-            @RequestParam(required = false) String reviewerId) {
-        int k=3;
-        return reviewService.list(pageNum, pageSize, reviewerId);
-    }
 
+    @GetMapping("/selectPage")
+    public Result selectPage(
+                             @RequestParam(defaultValue = "1") Integer pageNum,
+                             @RequestParam(defaultValue = "10") Integer pageSize,
+                             String reviewerId) {
+        int h=3;
+        PageInfo<review> page = reviewService.list(pageNum, pageSize, reviewerId);
+        return Result.success(page);
+    }
     @GetMapping("/{id}")
     public review getById(@PathVariable Integer id) {
         return reviewService.getById(id);

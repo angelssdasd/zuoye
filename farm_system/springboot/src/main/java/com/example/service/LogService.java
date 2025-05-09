@@ -8,6 +8,7 @@ import com.example.mapper.LogMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,16 +48,16 @@ public class LogService {
     /**
      * 查询所有
      */
-    public List<Log> selectAll(Log admin) {
-        return LogMapper.selectAll(admin);
+    public List<Log> selectAll(Integer operatorId) {
+        return LogMapper.selectAll(operatorId);
     }
 
     /**
      * 分页查询
      */
-    public PageInfo<Log> selectPage(Log admin, Integer pageNum, Integer pageSize) {
+    public PageInfo<Log> selectPage(Integer operatorId, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Log> list = LogMapper.selectAll(admin);
+        List<Log> list = LogMapper.selectAll(operatorId);
         return PageInfo.of(list);
     }
 

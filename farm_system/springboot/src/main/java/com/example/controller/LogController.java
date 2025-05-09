@@ -51,8 +51,8 @@ public class LogController {
      * 查询所有
      */
     @GetMapping("/selectAll")
-    public Result selectAll(Log admin) {
-        List<Log> list = LogService.selectAll(admin);
+    public Result selectAll(Integer operatorId) {
+        List<Log> list = LogService.selectAll(operatorId);
         return Result.success(list);
     }
 
@@ -60,10 +60,11 @@ public class LogController {
      * 分页查询
      */
     @GetMapping("/selectPage")
-    public Result selectPage(Log admin,
+    public Result selectPage(@RequestParam Integer operatorId,
                              @RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageInfo<Log> page = LogService.selectPage(admin, pageNum, pageSize);
+            int k=2;
+        PageInfo<Log> page = LogService.selectPage(operatorId, pageNum, pageSize);
         return Result.success(page);
     }
 

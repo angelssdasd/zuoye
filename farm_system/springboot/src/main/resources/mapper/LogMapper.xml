@@ -8,9 +8,12 @@
     <select id="selectAll" resultType="com.example.entity.Log">
         select * from log
         <where>
-            <if test="operationType != null"> and operationType like concat('%', #{operationType}, '%')</if>
+            <!-- 根据 operatorId 查询 -->
+            <if test="operatorId != -1"> and operator_id = #{operatorId} </if>
+
+
         </where>
-        order by id desc
+        order by log_id desc
     </select>
 
     <insert id="insert" parameterType="com.example.entity.Log" useGeneratedKeys="true"

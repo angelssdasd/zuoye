@@ -61,7 +61,7 @@
               <el-icon><User /></el-icon>
               <span>审核员日志记录</span>
             </el-menu-item>
-            <el-menu-item index="/supplier">
+            <el-menu-item index="/log">
               <el-icon><User /></el-icon>
               <span>系统日志</span>
             </el-menu-item>

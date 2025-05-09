@@ -20,7 +20,7 @@ public interface LogMapper {
     /**
       * 删除
     */
-    @Delete("delete from log where id = #{id}")
+    @Delete("delete from log where log_id = #{id}")
     int deleteById(Integer id);
 
 
@@ -33,7 +33,7 @@ public interface LogMapper {
     /**
       * 查询所有
     */
-    List<Log> selectAll(Log admin);
+    List<Log> selectAll(Integer operatorId);
 
     @Select("select * from log where username = #{username}")
     Log selectByUsername(String username);

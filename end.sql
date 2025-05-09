@@ -129,3 +129,9 @@ CREATE TABLE backup (
                         file_path VARCHAR(255) NOT NULL COMMENT '备份文件路径',
                         operator_id INT NOT NULL COMMENT '操作员ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='备份记录表';
+INSERT INTO log (operation_type, operation_detail, operation_time, operator_id) VALUES
+                                                                                    ('增', '新增用户：test_user', NOW() - INTERVAL 5 MINUTE, 1001),
+                                                                                    ('删', '删除角色：guest_role', NOW() - INTERVAL 4 MINUTE, 1002),
+                                                                                    ('改', '修改配置项：max_connections=1000', NOW() - INTERVAL 3 MINUTE, 1003),
+                                                                                    ('备份', '执行数据库全量备份', NOW() - INTERVAL 2 MINUTE, 1004),
+                                                                                    ('恢复', '从2025-05-08备份中恢复数据', NOW() - INTERVAL 1 MINUTE, 1005);
