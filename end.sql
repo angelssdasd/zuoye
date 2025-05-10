@@ -57,8 +57,8 @@ CREATE TABLE artifact (
 CREATE TABLE likes (
                        like_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '点赞记录ID(主键)',
                        user_id INT NOT NULL COMMENT '用户ID',
-                       artifact_id INT NOT NULL COMMENT '文物ID',
-                       FOREIGN KEY (artifact_id) REFERENCES artifact(artifact_id) ON DELETE CASCADE
+                       artifact_id INT NOT NULL COMMENT '文物ID'
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='点赞表';
 
 -- 评论表（用户对文物的评论）
@@ -142,3 +142,9 @@ INSERT INTO log (operation_type, operation_detail, operation_time, operator_id) 
                                                                                     ('改', '修改配置项：max_connections=1000', NOW() - INTERVAL 3 MINUTE, 1003),
                                                                                     ('备份', '执行数据库全量备份', NOW() - INTERVAL 2 MINUTE, 1004),
                                                                                     ('恢复', '从2025-05-08备份中恢复数据', NOW() - INTERVAL 1 MINUTE, 1005);
+INSERT INTO reviewer (username, password, email)
+VALUES (
+           'a',
+           '123',  -- 示例 bcrypt 加密密码
+           'test_reviewer@example.com'
+       );

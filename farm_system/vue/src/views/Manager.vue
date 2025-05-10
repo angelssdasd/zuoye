@@ -25,7 +25,7 @@
             <el-icon><HomeFilled /></el-icon>
             <span>系统首页</span>
           </el-menu-item>
-          <el-menu-item index="/goodreceive" v-if="data.user.role === 'USER'">
+          <el-menu-item index="/goodreceive" v-if="data.user.role === '审核员'">
               <el-icon><Menu /></el-icon>
               <span>审核评论</span>
             </el-menu-item>
@@ -46,27 +46,7 @@
               <el-icon><SoldOut /></el-icon>
               <span>用户管理</span>
             </el-menu-item>
-<!--            <el-menu-item index="/artifact">
-              <el-icon><Menu /></el-icon>
-              <span>海外文物用户管理</span>
-            </el-menu-item>
-      
-            <el-menu-item index="/qa">
-              <el-icon><Goods /></el-icon>
-              <span>知识问答字用户管理</span>
-            </el-menu-item>
-            <el-menu-item index="/goodsStock">
-              <el-icon><SoldOut /></el-icon>
-              <span>掌上客户端用户管理</span>
-            </el-menu-item>
-            <el-menu-item index="/goodsStock">
-              <el-icon><SoldOut /></el-icon>
-              <span>审核员管理</span>
-            </el-menu-item>
-            <el-menu-item index="/goodsStock">
-              <el-icon><SoldOut /></el-icon>
-              <span>管理员管理</span>
-            </el-menu-item>
+        
           </el-sub-menu>
       
           <el-sub-menu index="3" v-if="data.user.role === '管理员'">
@@ -124,7 +104,7 @@ const data = reactive({
   user: JSON.parse(localStorage.getItem('system-user') || '{}')
 })
 
-if (!data.user?.id) {
+if (!data.user?.userId) {
   ElMessage.error('请登录！')
   router.push('/login')
 }

@@ -20,6 +20,8 @@ public class UserService {
 
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private ReviewerService reviewerService;
 
     /**
      * 新增
@@ -80,7 +82,7 @@ public class UserService {
      * 登录
      */
     public Account login(Account account) {
-        Account dbUser = userMapper.selectByUsername(account.getUsername());
+        Account dbUser = reviewerService.findByUsername(account.getUsername());
         if (ObjectUtil.isNull(dbUser)) {
             throw new CustomException("用户不存在");
         }

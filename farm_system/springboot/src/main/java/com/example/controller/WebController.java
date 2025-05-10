@@ -17,8 +17,6 @@ public class WebController {
     @Resource
     private AdminService adminService;
     @Resource
-    private UserService userService;
-    @Resource
     private UserService ReviewerService;
 
 
@@ -41,33 +39,10 @@ public class WebController {
             ac = adminService.login(account);
         } else {
             ac = ReviewerService.login(account);
-            ac.setUserId(1);
-            ac.setRole("USER");
         }
         return Result.success(ac);
     }
 
-    /**
-     * 注册
-     */
-    @PostMapping("/register")
-    //@LogAOP(title = "注册", content = "用户注册")
-    public Result register(@RequestBody User user) {
-        userService.register(user);
-        return Result.success();
-    }
 
-    /**
-     * 修改密码
-     */
-    @PutMapping("/updatePassword")
-    public Result updatePassword(@RequestBody Account account) {
-        if ("ADMIN".equals(account.getRole())) {
-            adminService.updatePassword(account);
-        } else {
-            userService.updatePassword(account);
-        }
-        return Result.success();
-    }
 
 }
