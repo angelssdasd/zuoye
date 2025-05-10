@@ -68,18 +68,6 @@ import request from "@/utils/request";
 import {reactive} from "vue";
 import {ElMessageBox, ElMessage} from "element-plus";
 
-// const currentUserStr = localStorage.getItem("system-user");
-// let currentUserName = ""
-// if (currentUserStr) {
-//   const currentUser = JSON.parse(currentUserStr);
-//   currentUserName = currentUser.username;
-//   console.log("currentUserName:", currentUserName);
-// } else {
-//   console.log("没有找到用户信息");
-// }
-
-// 文件上传的接口地址
-const uploadUrl = import.meta.env.VITE_BASE_URL + '/files/upload'
 
 const data = reactive({
   pageNum: 1,
