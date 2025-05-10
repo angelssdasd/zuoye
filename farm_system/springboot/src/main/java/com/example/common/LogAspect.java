@@ -25,11 +25,11 @@ public class LogAspect {
         String type = logAOP.title();
         String content = logAOP.content();
         String time = DateUtil.now();
-        String operator = "";
+        Integer operator = 0;
         Admin user = JwtTokenUtils.getCurrentUser();
         System.out.println("userId: " + user);
         if(ObjectUtil.isNotNull(user)){
-            operator = user.getUsername();
+            operator = user.getUserId();
         }
         System.out.println("userId: " + operator);
         Result result = (Result)joinPoint.proceed();
@@ -37,7 +37,7 @@ public class LogAspect {
         Object data = result.getData();
         if(data instanceof Admin){
             Admin admin = (Admin) data;
-            operator = admin.getUsername();
+            operator = admin.getUserId();
             System.out.println("login userId: " + operator);
         }
 
@@ -46,7 +46,7 @@ public class LogAspect {
                 + ", time: " + time
                 + ", userId: " + operator);
 
-        Log log = new Log(type, content, time, Integer.valueOf(operator));
+        Log log = new Log(type, content, time, operator);
         logService.add(log);
 
         return result;
