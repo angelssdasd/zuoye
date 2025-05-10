@@ -3,7 +3,9 @@ package com.example.controller;
 import com.example.common.LogAOP;
 import com.example.common.Result;
 import com.example.entity.Admin;
+import com.example.entity.Reviewer;
 import com.example.service.AdminService;
+import com.example.service.ReviewerService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -14,19 +16,19 @@ import java.util.List;
  * 管理员前端操作接口
  **/
 @RestController
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/reviewer")
+public class ReviewerController {
 
     @Resource
-    private AdminService adminService;
+    private ReviewerService reviewerService;
 
     /**
      * 新增
      */
     @PostMapping("/add")
-    @LogAOP(title = "增", content = "新增管理员用户信息")
-    public Result add(@RequestBody Admin admin) {
-        adminService.add(admin);
+    @LogAOP(title = "增", content = "新增审核员用户信息")
+    public Result add(@RequestBody Reviewer reviewer) {
+        reviewerService.add(reviewer);
         return Result.success();
     }
 
@@ -34,9 +36,9 @@ public class AdminController {
      * 删除
      */
     @DeleteMapping("/delete/{id}")
-    @LogAOP(title = "删", content = "删除管理员用户信息")
+    @LogAOP(title = "删", content = "删除审核员用户信息")
     public Result deleteById(@PathVariable Integer id) {
-        adminService.deleteById(id);
+        reviewerService.deleteById(id);
         return Result.success();
     }
 
@@ -44,9 +46,9 @@ public class AdminController {
      * 修改
      */
     @PutMapping("/update")
-    @LogAOP(title = "改", content = "修改管理员用户信息")
-    public Result updateById(@RequestBody Admin admin) {
-        adminService.updateById(admin);
+    @LogAOP(title = "改", content = "修改审核员用户信息")
+    public Result updateById(@RequestBody Reviewer reviewer) {
+        reviewerService.updateById(reviewer);
         return Result.success();
     }
 
@@ -55,16 +57,16 @@ public class AdminController {
      */
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
-        Admin admin = adminService.selectById(id);
-        return Result.success(admin);
+        Reviewer reviewer = reviewerService.selectById(id);
+        return Result.success(reviewer);
     }
 
     /**
      * 查询所有
      */
     @GetMapping("/selectAll")
-    public Result selectAll(Admin admin) {
-        List<Admin> list = adminService.selectAll(admin);
+    public Result selectAll(Reviewer reviewer) {
+        List<Reviewer> list = reviewerService.selectAll(reviewer);
         return Result.success(list);
     }
 
@@ -72,10 +74,10 @@ public class AdminController {
      * 分页查询
      */
     @GetMapping("/selectPage")
-    public Result selectPage(Admin admin,
+    public Result selectPage(Reviewer reviewer,
                              @RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageInfo<Admin> page = adminService.selectPage(admin, pageNum, pageSize);
+        PageInfo<Reviewer> page = reviewerService.selectPage(reviewer, pageNum, pageSize);
         return Result.success(page);
     }
 

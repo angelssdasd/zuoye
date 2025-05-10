@@ -19,7 +19,7 @@ public interface AdminMapper {
     /**
       * 删除
     */
-    @Delete("delete from admin where id = #{id}")
+    @Delete("delete from admin where user_id = #{id}")
     int deleteById(Integer id);
 
     /**
@@ -30,7 +30,7 @@ public interface AdminMapper {
     /**
       * 根据ID查询
     */
-    @Select("select * from admin where id = #{id}")
+    @Select("select * from admin where user_id = #{id}")
     Admin selectById(Integer id);
 
 

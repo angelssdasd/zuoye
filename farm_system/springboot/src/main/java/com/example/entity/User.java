@@ -6,36 +6,45 @@ package com.example.entity;
 public class User extends Account {
 
     /** ID */
-    private Integer id;
+    private Integer userId;
     /** 用户名 */
     private String username;
     /** 密码 */
     private String password;
-    /** 姓名 */
-    private String name;
-    /** 头像 */
-    private String avatar;
+    /** 邮箱 */
+    private String email;
+    /**
+     * 注册时间
+     */
+    private String registerTime;
+    /** 权限状态 */
+    private String permissionStatus;
+//    /** 姓名 */
+//    private String name;
+//    /** 头像 */
+//    private String avatar;
     /** 角色标识 */
     private String role;
-    private String sex;
-    private String phone;
-    private String email;
 
-    public String getSex() {
-        return sex;
-    }
+//    private String sex;
+//    private String phone;
+//    private String email;
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+//    public String getSex() {
+//        return sex;
+//    }
+//
+//    public void setSex(String sex) {
+//        this.sex = sex;
+//    }
+//
+//    public String getPhone() {
+//        return phone;
+//    }
+//
+//    public void setPhone(String phone) {
+//        this.phone = phone;
+//    }
 
     public String getEmail() {
         return email;
@@ -45,15 +54,15 @@ public class User extends Account {
         this.email = email;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
+//    @Override
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    @Override
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 
     @Override
     public String getUsername() {
@@ -75,17 +84,17 @@ public class User extends Account {
         this.password = password;
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
+//    @Override
+//    public String getName() {
+//        return name;
+//    }
+//
+//    @Override
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
+    /*@Override
     public String getAvatar() {
         return avatar;
     }
@@ -93,7 +102,7 @@ public class User extends Account {
     @Override
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
+    }*/
 
     @Override
     public String getRole() {
@@ -103,5 +112,35 @@ public class User extends Account {
     @Override
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public Integer getUserId() {
+        return userId;
+    }
+
+    @Override
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String getPermissionStatus() {
+        return permissionStatus;
+    }
+
+    @Override
+    public void setPermissionStatus(String permissionStatus) {
+        this.permissionStatus = permissionStatus;
+    }
+
+    @Override
+    public String getRegisterTime() {
+        return registerTime;
+    }
+
+    @Override
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
     }
 }

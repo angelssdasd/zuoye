@@ -8,19 +8,33 @@
     <select id="selectAll" resultType="com.example.entity.Admin">
         select * from admin
         <where>
-            <if test="name != null"> and name like concat('%', #{name}, '%')</if>
+            <if test="username != null"> and name like concat('%', #{username}, '%')</if>
         </where>
-        order by id desc
+--         order by user_id desc
     </select>
 
-    <insert id="insert" parameterType="com.example.entity.Admin" useGeneratedKeys="true">
-        insert into admin(id, username, password, name, avatar, role)
-        values (#{id}, #{username}, #{password}, #{name}, #{avatar}, #{role})
+<!--    <insert id="insert" parameterType="com.example.entity.Admin" useGeneratedKeys="true">-->
+<!--        insert into admin(id, username, password, name, avatar, role)-->
+<!--        values (#{id}, #{username}, #{password}, #{name}, #{avatar}, #{role})-->
+<!--    </insert>-->
+
+    <insert id="insert" parameterType="com.example.entity.Admin" useGeneratedKeys="true" keyProperty="userId">
+        insert into admin(username, password, email,permission_status)
+        values (#{username}, #{password}, #{email},#{permissionStatus})
     </insert>
 
+<!--    <update id="updateById" parameterType="com.example.entity.Admin">-->
+<!--        update admin set username = #{username}, password = #{password}, name = #{name}, avatar = #{avatar},role = #{role}-->
+<!--        where id = #{id} -->
+<!--    </update>-->
+
     <update id="updateById" parameterType="com.example.entity.Admin">
-        update admin set username = #{username}, password = #{password}, name = #{name}, avatar = #{avatar},role = #{role}
-        where id = #{id} 
+        update admin set
+                         username = #{username},
+                         password = #{password},
+                         email = #{email},
+                         permission_status = #{permissionStatus}
+        where user_id = #{userId}
     </update>
 
 </mapper>

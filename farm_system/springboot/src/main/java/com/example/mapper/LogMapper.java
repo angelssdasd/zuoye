@@ -27,7 +27,7 @@ public interface LogMapper {
     /**
       * 根据ID查询
     */
-    @Select("select * from log where id = #{id}")
+    @Select("select * from log where log_id = #{id}")
     Log selectById(Integer id);
 
     /**

@@ -17,7 +17,6 @@
         <el-table-column label="密码" prop="password"></el-table-column>
         <el-table-column label="邮箱" prop="email"></el-table-column>
         <el-table-column label="注册时间" prop="registerTime"></el-table-column>
-        <el-table-column label="用户角色" prop="role"></el-table-column>
         <el-table-column label="权限状态" prop="permissionStatus"></el-table-column>
         <el-table-column label="操作" header-align="center" width="160">
           <template #default="scope">
@@ -96,7 +95,7 @@ const data = reactive({
 
 // 分页查询
 const load = () => {
-  request.get('/admin/selectPage', {
+  request.get('/user/selectPage', {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
@@ -128,7 +127,7 @@ const handleEdit = (row) => {
 // 新增保存
 const add = () => {
   //console.log(data.form)
-  request.post('/admin/add', data.form).then(res => {
+  request.post('/user/add', data.form).then(res => {
     if (res.code === '200') {
       load()
       ElMessage.success('操作成功')
@@ -141,7 +140,7 @@ const add = () => {
 
 // 编辑保存
 const update = () => {
-  request.put('/admin/update', data.form).then(res => {
+  request.put('/user/update', data.form).then(res => {
     if (res.code === '200') {
       load()
       ElMessage.success('操作成功')
@@ -162,7 +161,7 @@ const save = () => {
 const handleDelete = (userId) => {
   console.log("userId: ",userId)
   ElMessageBox.confirm('删除后数据无法恢复，您确定删除吗?', '删除确认', { type: 'warning' }).then(res => {
-    request.delete('/admin/delete/' + userId, {
+    request.delete('/user/delete/' + userId, {
       params: { operator: data.form.operator }
     }).then(res => {
       if (res.code === '200') {

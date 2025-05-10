@@ -11,31 +11,34 @@ public class Admin extends Account {
     private String username;
     /** 密码 */
     private String password;
-    /** 姓名 */
-    private String name;
-    /** 头像 */
-    private String avatar;
+    /**
+     * 邮箱
+     */
+    private String email;
+    /**
+     * 注册时间
+     */
+    private String registerTime;
+    /** 姓名 *//*
+    private String name;*/
+    /** 头像 *//*
+    private String avatar;*/
     /** 角色标识 */
     private String role;
-    /** 操作ID*/
-    private String operatorId;
+    /**
+     *权限状态
+     */
+    private String permissionStatus;
 
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
-    }
 
     @Override
-    public Integer getId() {
+    public Integer getUserId() {
         return userId;
     }
 
     @Override
-    public void setId(Integer id) {
-        this.userId = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -58,7 +61,7 @@ public class Admin extends Account {
         this.password = password;
     }
 
-    @Override
+   /* @Override
     public String getName() {
         return name;
     }
@@ -66,9 +69,9 @@ public class Admin extends Account {
     @Override
     public void setName(String name) {
         this.name = name;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public String getAvatar() {
         return avatar;
     }
@@ -76,7 +79,7 @@ public class Admin extends Account {
     @Override
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
+    }*/
 
     @Override
     public String getRole() {
@@ -86,5 +89,35 @@ public class Admin extends Account {
     @Override
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String getRegisterTime() {
+        return registerTime;
+    }
+
+    @Override
+    public void setRegisterTime(String registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    @Override
+    public String getPermissionStatus() {
+        return permissionStatus;
+    }
+
+    @Override
+    public void setPermissionStatus(String permissionStatus) {
+        this.permissionStatus = permissionStatus;
     }
 }

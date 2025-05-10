@@ -8,20 +8,34 @@
     <select id="selectAll" resultType="com.example.entity.User">
         select * from user
         <where>
-            <if test="name != null"> and name like concat('%', #{name}, '%')</if>
+            <if test="username != null"> and name like concat('%', #{username}, '%')</if>
         </where>
-        order by id desc
+        order by user_id desc
     </select>
 
-    <insert id="insert" parameterType="com.example.entity.User" useGeneratedKeys="true">
-        insert into user(id, username, password, name, avatar, role, sex, phone, email)
-        values (#{id}, #{username}, #{password}, #{name}, #{avatar}, #{role}, #{sex}, #{phone}, #{email})
+<!--    <insert id="insert" parameterType="com.example.entity.User" useGeneratedKeys="true">-->
+<!--        insert into user(id, username, password, name, avatar, role, sex, phone, email)-->
+<!--        values (#{id}, #{username}, #{password}, #{name}, #{avatar}, #{role}, #{sex}, #{phone}, #{email})-->
+<!--    </insert>-->
+
+    <insert id="insert" parameterType="com.example.entity.User" useGeneratedKeys="true" keyProperty="userId">
+        insert into user(username, password, email, permission_status)
+        values (#{username}, #{password}, #{email}, #{permissionStatus})
     </insert>
 
+<!--    <update id="updateById" parameterType="com.example.entity.User">-->
+<!--        update user set username = #{username}, password = #{password}, name = #{name}, avatar = #{avatar},-->
+<!--        role = #{role}, sex = #{sex}, phone = #{phone}, email = #{email}-->
+<!--        where id = #{id} -->
+<!--    </update>-->
+
     <update id="updateById" parameterType="com.example.entity.User">
-        update user set username = #{username}, password = #{password}, name = #{name}, avatar = #{avatar},
-        role = #{role}, sex = #{sex}, phone = #{phone}, email = #{email}
-        where id = #{id} 
+        update user
+        set username = #{username},
+            password = #{password},
+            email = #{email},
+            permission_status = #{permissionStatus}
+        where user_id = #{userId}
     </update>
 
 </mapper>
