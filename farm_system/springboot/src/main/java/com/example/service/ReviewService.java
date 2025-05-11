@@ -1,4 +1,5 @@
 package com.example.service;
+import com.example.common.Result;
 import com.example.entity.review;
 import com.example.mapper.reviewMapper;
 import com.github.pagehelper.PageHelper;
@@ -37,7 +38,8 @@ public class ReviewService {
     }
 
 
-    public boolean delete(Integer id) {
-        return reviewMapper.deleteById(id) > 0;
+    public Result delete(Integer id) {
+         reviewMapper.deleteById(id) ;
+         return Result.success();
     }
 }

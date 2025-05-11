@@ -10,9 +10,7 @@
 
     <!-- 表格及操作按钮 -->
     <div class="card" style="margin-bottom: 5px">
-      <div style="margin-bottom: 10px">
-        <el-button type="primary" @click="handleAdd">新增</el-button>
-      </div>
+     
       <el-table :data="data.tableData" stripe>
         <el-table-column label="审核ID" prop="reviewId"></el-table-column>
         <el-table-column label="内容类型" prop="contentType"></el-table-column>
@@ -23,7 +21,7 @@
         <el-table-column label="审核员ID" prop="reviewerId"></el-table-column>
         <el-table-column label="操作" header-align="center" width="160">
           <template #default="scope">
-            <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
+           
             <el-button type="danger" @click="handleDelete(scope.row.reviewId)">删除</el-button>
           </template>
         </el-table-column>

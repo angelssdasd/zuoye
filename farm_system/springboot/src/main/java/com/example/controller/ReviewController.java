@@ -42,7 +42,7 @@ public class ReviewController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable Integer id) {
+    public Result delete(@PathVariable Integer id) {
         return reviewService.delete(id);
     }
 }
