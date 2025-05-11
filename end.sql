@@ -47,6 +47,7 @@ CREATE TABLE artifact (
                           name VARCHAR(100) NOT NULL COMMENT '文物名称',
                           era VARCHAR(50) NOT NULL COMMENT '年代',
                           type VARCHAR(50) NOT NULL COMMENT '文物类型（如瓷器、书画等）',
+                          museum VARCHAR(50) NOT NULL COMMENT '博物馆名称',
                           description TEXT COMMENT '详细介绍',
                           image_url VARCHAR(255) COMMENT '图片存储路径',
                           likes INT DEFAULT 0 COMMENT '点赞数',
