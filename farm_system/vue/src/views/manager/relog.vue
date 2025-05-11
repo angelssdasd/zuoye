@@ -10,9 +10,7 @@
 
     <!-- 表格及操作按钮 -->
     <div class="card" style="margin-bottom: 5px">
-      <div style="margin-bottom: 10px">
-    
-      </div>
+     
       <el-table :data="data.tableData" stripe>
         <el-table-column label="审核ID" prop="reviewId"></el-table-column>
         <el-table-column label="内容类型" prop="contentType"></el-table-column>

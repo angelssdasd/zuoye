@@ -43,8 +43,6 @@ public class ReviewController {
 
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
-
-         reviewService.delete(id);
-         return Result.success();
+        return reviewService.delete(id);
     }
 }
