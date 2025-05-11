@@ -104,15 +104,15 @@ CREATE TABLE review (
                         comment_id INT COMMENT '关联评论ID（仅当类型为评论时有效）',
                         post_id INT COMMENT '关联动态ID（仅当类型为动态时有效）',
                         result ENUM('通过', '未通过') NOT NULL COMMENT '审核结果',
-                        review_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '审核时间'
-
+                        review_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '审核时间',
+                        reviewer_id INT NOT NULL COMMENT '审核员ID'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='审核记录表';
-INSERT INTO review (content_type, comment_id, post_id, result) VALUES
-                                                                                ('评论', 101, NULL, '通过'),
-                                                                                ('动态', NULL, 201, '未通过'),
-                                                                                ('媒体', NULL, NULL, '通过'),
-                                                                                ('评论', 102, NULL, '未通过'),
-                                                                                ('动态', NULL, 202, '通过');
+INSERT INTO review (content_type, comment_id, post_id, result, reviewer_id) VALUES
+                                                                                ('评论', 101, NULL, '通过', 1),
+                                                                                ('动态', NULL, 201, '未通过', 2),
+                                                                                ('媒体', NULL, NULL, '通过', 3),
+                                                                                ('评论', 102, NULL, '未通过', 2),
+                                                                                ('动态', NULL, 202, '通过', 1);
 -- 日志表（系统操作日志）
 CREATE TABLE log (
                      log_id INT AUTO_INCREMENT PRIMARY KEY COMMENT '日志ID(主键)',
