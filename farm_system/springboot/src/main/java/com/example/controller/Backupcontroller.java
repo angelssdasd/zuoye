@@ -34,7 +34,7 @@ public class Backupcontroller {
 
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
-        backupMapper.deleteById(id);
+        Backup backup=backupMapper.selectById(id);
         return Result.success();
     }
 }

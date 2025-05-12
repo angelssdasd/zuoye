@@ -14,7 +14,7 @@
         <el-table-column prop="operatorId" label="操作员ID" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button type="danger" @click="handleDelete(scope.row.backupId)">删除</el-button>
+            <el-button type="danger" @click="handleDelete(scope.row.backupId)">还原到此状态</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -60,10 +60,10 @@ const load = () => {
 }
 
 const handleDelete = (id) => {
-  ElMessageBox.confirm('确认删除该备份记录？', '警告', { type: 'warning' }).then(() => {
+  ElMessageBox.confirm('确认恢复到此状态？', '警告', { type: 'warning' }).then(() => {
     request.delete(`/backup/delete/${id}`).then(res => {
       if (res.code === '200') {
-        ElMessage.success('删除成功')
+        ElMessage.success('执行成功')
         load()
       } else {
         ElMessage.error(res.msg)

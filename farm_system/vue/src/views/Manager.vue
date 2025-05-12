@@ -61,13 +61,9 @@
             <el-menu-item index="/log">
               <el-icon><User /></el-icon>
               <span>系统日志</span>
-            </el-menu-item>
-            <el-menu-item index="/backup">
-              <el-icon><User /></el-icon>
-              <span>备份记录</span>
-            </el-menu-item>
+            </el-menu-item>      
           </el-sub-menu>
-            <el-menu-item index="/supplier" v-if="data.user.role === '管理员'">
+            <el-menu-item index="/backup" v-if="data.user.role === '管理员'">
               <el-icon><User /></el-icon>
               <span>数据库备份和恢复</span>
             </el-menu-item>
