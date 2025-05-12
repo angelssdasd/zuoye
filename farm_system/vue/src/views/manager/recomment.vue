@@ -16,16 +16,17 @@
       <el-table-column label="审核状态" prop="reviewStatus" />
       <el-table-column label="操作">
         <template #default="scope">
+          <el-button type="primary" @click="edit(scope.row)">编辑</el-button>
           <el-button type="danger" @click="del(scope.row.commentId)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <!-- 添加按钮 -->
-    <el-button type="success" @click="formVisible = true" style="margin-top: 10px">新增评论</el-button>
+    <el-button type="success" @click="openAddForm" style="margin-top: 10px">新增评论</el-button>
 
-    <!-- 添加表单 -->
-    <el-dialog v-model="formVisible" title="新增评论">
+    <!-- 表单对话框：新增和编辑复用 -->
+    <el-dialog v-model="formVisible" :title="form.commentId ? '编辑评论' : '新增评论'">
       <el-form :model="form">
         <el-input v-model="form.content" placeholder="内容" />
         <el-input v-model="form.userId" placeholder="用户ID" />
@@ -49,7 +50,7 @@ import request from '@/utils/request'
 
 const tableData = ref([])
 const formVisible = ref(false)
-const form = reactive({ content: '', userId: '', artifactId: '', reviewStatus: '未通过' })
+const form = reactive({ content: '', userId: '', artifactId: '', reviewStatus: '未通过', commentId: null })
 const search = reactive({ userId: '', artifactId: '' })
 
 const load = () => {
@@ -59,14 +60,34 @@ const load = () => {
 }
 
 const save = () => {
-  request.post('/comment/add', form).then(() => {
-    formVisible.value = false
-    load()
-  })
+  if (form.commentId) {
+    // 编辑时调用 update 接口
+    request.put('/comment/update', form).then(() => {
+      formVisible.value = false
+      load()
+    })
+  } else {
+    // 新增时调用 add 接口
+    request.post('/comment/add', form).then(() => {
+      formVisible.value = false
+      load()
+    })
+  }
 }
 
 const del = (id) => {
   request.delete(`/comment/delete/${id}`).then(() => load())
+}
+
+const edit = (row) => {
+  Object.assign(form, row) // 将选中行数据复制到表单中
+  formVisible.value = true
+}
+
+const openAddForm = () => {
+  // 重置表单（用于新增）
+  Object.assign(form, { content: '', userId: '', artifactId: '', reviewStatus: '未通过', commentId: null })
+  formVisible.value = true
 }
 
 load()
