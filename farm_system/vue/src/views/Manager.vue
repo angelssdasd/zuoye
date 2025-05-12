@@ -25,7 +25,7 @@
             <el-icon><HomeFilled /></el-icon>
             <span>系统首页</span>
           </el-menu-item>
-          <el-menu-item index="/goodreceive" v-if="data.user.role === '审核员'">
+          <el-menu-item index="/recomment" v-if="data.user.role === '审核员'">
               <el-icon><Menu /></el-icon>
               <span>审核评论</span>
             </el-menu-item>

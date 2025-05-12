@@ -21,7 +21,7 @@ const router = createRouter({
         { path: 'orders', component: () => import('@/views/manager/Orders.vue')},
         { path: 'log', component: () => import('@/views/manager/log.vue')},
         { path: 'relog', component: () => import('@/views/manager/relog.vue')},
-        { path: 'goodreceive', component: () => import('@/views/manager/GoodsReceive.vue')},
+        { path: 'recomment', component: () => import('@/views/manager/recomment.vue')},
         { path: 'returns', component: () => import('@/views/manager/Ordersreturn.vue')},
         { path: 'reviewer', component: () => import('@/views/manager/Reviewer.vue')},
       ]
