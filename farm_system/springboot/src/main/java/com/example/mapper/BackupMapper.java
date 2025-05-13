@@ -18,4 +18,7 @@ public interface BackupMapper {
     void insert(Backup backup);
 
     void deleteById(Integer id);
+
+    // 根据备份ID获取文件路径
+    String getFilePath(Integer backupId);
 }
