@@ -7,7 +7,7 @@
     </div>
 
     <div class="card">
-      <el-table :data="data.tableData" stripe @selection-change="handleSelectionChange">
+      <el-table ref="tableRef" :data="data.tableData" stripe @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column prop="backupId" label="ID" />
         <el-table-column prop="backupTime" label="时间" />
@@ -28,7 +28,11 @@
     </div>
 
     <div class="card" v-if="selectedFiles.length">
-      <h3>已选择的文件</h3>
+      <h3>
+        已选择的文件
+        <el-button type="danger" @click="clearSelectedFiles">清空</el-button>
+        <el-button type="primary" @click="restore">恢复</el-button>
+      </h3>
       <ul>
         <li v-for="file in selectedFiles" :key="file.backupId">{{ file.filePath }}</li>
       </ul>
@@ -47,6 +51,7 @@ const data = reactive({
   pageSize: 10,
   operatorId: null,
 })
+const tableRef = ref(null)
 
 const selectedFiles = ref([])
 
@@ -70,6 +75,26 @@ const handleSelectionChange = (selection) => {
 const reset = () => {
   data.operatorId = null
   load()
+}
+
+const clearSelectedFiles = () => {
+  selectedFiles.value = []
+  tableRef.value.clearSelection()
+}
+const restore = () => {
+  if (selectedFiles.value.length) {
+    const backupIds = selectedFiles.value.map(file => file.backupId).join(',')
+    request.post('/backup/restore', backupIds).then(res => {
+      if (res.code === '200') {
+        ElMessage.success('恢复成功')
+        load()
+      } else {
+        ElMessage.error(res.msg)
+      }
+    })
+  } else {
+    ElMessage.warning('请选择要恢复的文件')
+  }
 }
 
 load()
