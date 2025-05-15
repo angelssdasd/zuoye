@@ -32,4 +32,9 @@
         DELETE FROM backup WHERE backup_id = #{id}
     </delete>
 
+    <!-- 根据主键返回文件地址 -->
+    <select id="getFilePath" resultType="string">
+            SELECT file_path FROM backup WHERE backup_id = #{backupId}
+    </select>
+
 </mapper>
