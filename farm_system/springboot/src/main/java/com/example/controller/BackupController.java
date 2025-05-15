@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.entity.Backup;
-import com.example.mapper.BackupMapper;
 import com.example.common.Result;
 import com.example.service.BackupService;
 import com.github.pagehelper.PageHelper;
@@ -12,9 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/backup")
-public class Backupcontroller {
+public class BackupController {
 
     @Autowired
     private BackupService backupService;
@@ -30,15 +31,18 @@ public class Backupcontroller {
 
     @PostMapping("/restore")
     public Result restore(@RequestBody String backupIds) {
-        ArrayList<Integer>buckupIdList = new ArrayList<>();
+        ArrayList<Integer>backupIdList = new ArrayList<>();
         //去掉双引号
         String newBackupIds = backupIds.replaceAll("\"", "");
         for (String s : newBackupIds.split(",")) {
-            buckupIdList.add(Integer.parseInt(s));
+            backupIdList.add(Integer.parseInt(s));
         }
-        System.out.println(buckupIdList);
-        return Result.success();
+        Result result = backupService.JudgeFilePath(backupIdList);
+        if(Objects.equals(result.getCode(), "500")){
+            return result;
+        }
+        else {
+            return backupService.restore(backupIdList);
+        }
     }
-
-
 }
