@@ -63,6 +63,12 @@
               <span>系统日志</span>
             </el-menu-item>      
           </el-sub-menu>
+
+          <el-menu-item index="/artifact">
+            <el-icon><HomeFilled /></el-icon>
+            <span>文物管理</span>
+          </el-menu-item>
+
             <el-menu-item index="/backup" v-if="data.user.role === '管理员'">
               <el-icon><User /></el-icon>
               <span>数据库备份和恢复</span>

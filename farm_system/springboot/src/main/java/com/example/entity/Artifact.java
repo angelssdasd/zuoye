@@ -8,9 +8,11 @@ public class Artifact {
     private String name;
     private String era;
     private String type;
+    private String museum;
     private String description;
     private String imageUrl;
     private Integer likes;
+    private String feature;
 
     public Integer getArtifactId() {
         return artifactId;
@@ -66,5 +68,21 @@ public class Artifact {
 
     public void setLikes(Integer likes) {
         this.likes = likes;
+    }
+
+    public String getMuseum() {
+        return museum;
+    }
+
+    public void setMuseum(String museum) {
+        this.museum = museum;
+    }
+
+    public String getFeature() {
+        return feature;
+    }
+
+    public void setFeature(String feature) {
+        this.feature = feature;
     }
 }
