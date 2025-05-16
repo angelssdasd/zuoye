@@ -14,13 +14,17 @@
 
     <insert id="insert" parameterType="com.example.entity.Artifact" useGeneratedKeys="true"
             keyProperty="artifactId" keyColumn="artifact_id">
-        insert into artifact(name, era, type, description, image_url, likes)
-        values (#{name}, #{era}, #{type}, #{description}, #{imageUrl}, #{likes})
+        insert into artifact(name, era, type, museum, description, image_url, likes, feature)
+        values (#{name}, #{era}, #{type}, #{museum}, #{description}, #{imageUrl}, #{likes}, #{feature})
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.Artifact">
-        update artifact set name = #{name}, era = #{era}, type = #{type}, description = #{description},
-                            image_url = #{imageUrl}, likes = #{likes}
+        update artifact set name = #{name}, era = #{era},
+                            type = #{type}, museum = #{museum},
+                            description = #{description},
+                            image_url = #{imageUrl},
+                            likes = #{likes},
+                            feature = #{feature}
         where artifact_id = #{artifactId}
     </update>
 
