@@ -8,8 +8,10 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +34,12 @@ public class BackupService {
 
     public String getFilePath(Integer backupId) {
         return backupMapper.getFilePath(backupId);
+    }
+
+    //根据文件路径删除记录
+    public void deleteByFilePath(String filePath) {
+        // 调用backupMapper的deleteByFilePath方法，传入filePath参数
+        backupMapper.deleteByFilePath(filePath);
     }
     public Result JudgeFilePath(ArrayList<Integer> backupIdList)
     {
@@ -75,7 +83,9 @@ public class BackupService {
             }
         }
     }
-
+    /**
+     * 恢复备份
+     */
     public Result restore(ArrayList<Integer> backupIdList){
         String command;
         ProcessBuilder processBuilder;
@@ -125,5 +135,56 @@ public class BackupService {
             e.printStackTrace();
             return Result.error("服务运行失败");
         }
+    }
+        /*
+        * 获取过期的全量文件列表
+         */
+    public List<String> GetExpirationFile(LocalDateTime expirationTime) {
+        List<String> expiredFiles = backupMapper.getExpiredFiles(expirationTime);
+        List<String> fullBackupFiles = new ArrayList<>();
+        for (String sqlFilePath : expiredFiles) {
+            if (isFullBackupFile(sqlFilePath)) {
+                fullBackupFiles.add(sqlFilePath);
+            }
+        }
+        return fullBackupFiles;
+    }
+
+    /*
+    * 根据全量文件时间获取对应的差异文件列表
+     */
+    public List<String> GetDiffFile(LocalDateTime fullBackupTime) {
+        LocalDateTime DeadlineTime = fullBackupTime.plusDays(7);
+        List<String> Files = backupMapper.getExpiredFiles(DeadlineTime);
+        List<String>DiffFFiles= new ArrayList<>();
+        for (String sqlFilePath : Files) {
+            if (!isFullBackupFile(sqlFilePath)) {
+                DiffFFiles.add(sqlFilePath);
+            }
+        }
+       return DiffFFiles;
+    }
+
+    /**
+     * 判断是否是 manage-full- 开头的 SQL 文件
+     *
+     * @param sqlFilePath .sql 文件路径
+     * @return 如果是 full 类型的备份文件，返回 true；否则返回 false
+     */
+    private boolean isFullBackupFile(String sqlFilePath) {
+        File sqlFile = new File(sqlFilePath);
+        String fileName = sqlFile.getName(); // 获取文件名，例如 "manage-full-20250516010135.sql"
+
+        // 判断文件名是否以 "manage-full-" 开头且包含 ".sql"
+        return fileName.startsWith("manage-full-") && fileName.endsWith(".sql");
+    }
+    /*
+    * 根据全量文件路径获取对应的差异文件列表
+     */
+    public List<String> GetDiffFile(String fullBackupFilePath) {
+        List<String> diffFiles = new ArrayList<>();
+        LocalDateTime fullBackupTime =backupMapper.getBackupTime(fullBackupFilePath);
+        diffFiles=GetDiffFile(fullBackupTime);
+        return diffFiles;
     }
 }
