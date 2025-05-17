@@ -17,8 +17,7 @@ public class DeleteBackupFile {
     @Autowired
     private BackupService backupService;
 
-    // 每周六凌晨 0 点执行
-    @Scheduled(cron = "0 0 0 * * 1")
+     @Scheduled(cron = "0 0 0 ? * 1")// 每周一凌晨 0 点执行
     public void deleteBackupFile() {
         DateTime now = DateTime.now();
         System.out.println("当前时间：" + now);
