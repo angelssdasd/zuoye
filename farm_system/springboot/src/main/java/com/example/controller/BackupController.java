@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -44,5 +45,14 @@ public class BackupController {
         else {
             return backupService.restore(backupIdList);
         }
+    }
+    /*
+    开始备份文件
+     */
+    @PostMapping("/start")
+    public Result start(@RequestBody Map<String, Object> params ) {
+        String type = (String) params.get("type");
+        String userId =String.valueOf(params.get("userId"));
+        return backupService.start(type, userId);
     }
 }

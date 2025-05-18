@@ -4,6 +4,7 @@ import com.example.common.Result;
 import com.example.entity.Backup;
 import com.example.mapper.BackupMapper;
 import jakarta.annotation.Resource;
+import jakarta.transaction.Transactional;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
@@ -182,9 +183,45 @@ public class BackupService {
     * 根据全量文件路径获取对应的差异文件列表
      */
     public List<String> GetDiffFile(String fullBackupFilePath) {
-        List<String> diffFiles = new ArrayList<>();
+        List<String> diffFiles;
         LocalDateTime fullBackupTime =backupMapper.getBackupTime(fullBackupFilePath);
         diffFiles=GetDiffFile(fullBackupTime);
         return diffFiles;
     }
+
+    /*
+    * 开始备份
+     */
+
+    @Transactional
+public Result start(String type, String userId) {
+    String command;
+    ProcessBuilder processBuilder;
+    try {
+        if (type.equals("full")) {
+            org.springframework.core.io.Resource resource = resourceLoader.getResource("classpath:BackUp_shell/full_backup_db.bat");
+            command = resource.getFile().getAbsolutePath(); // 获取脚本文件的绝对地址
+        } else {
+            org.springframework.core.io.Resource resource = resourceLoader.getResource("classpath:BackUp_shell/incremental_backup.bat");
+            command = resource.getFile().getAbsolutePath(); // 获取脚本文件的绝对地址
+        }
+        processBuilder = new ProcessBuilder("cmd.exe", "/c", command, String.valueOf(userId));
+        Process process = processBuilder.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+        int exitCode = process.waitFor();
+        if (exitCode == 0) {
+            return Result.success();
+        } else {
+            return Result.error("命令运行失败，错误码为" + exitCode);
+        }
+
+    } catch (IOException | InterruptedException e) {
+        return Result.error("执行备份脚本失败：" + e.getMessage());
+    }
+}
+
 }
