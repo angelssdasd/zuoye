@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -63,8 +64,8 @@ public class BackupService {
             ArrayList<String> filePathList2=new ArrayList<>();
             Collections.addAll(filePathList1, FilePath1.split("-"));
             Collections.addAll(filePathList2, FilePath2.split("-"));
-            int Date1=Integer.parseInt(filePathList1.get(2).substring(4,8));
-            int Date2=Integer.parseInt(filePathList2.get(2).substring(4,8));
+            int Date1=Integer.parseInt(filePathList1.get(2).substring(4,14));
+            int Date2=Integer.parseInt(filePathList2.get(2).substring(4,14));
             if(filePathList1.get(1).equals(filePathList2.get(1))){
                 return Result.error("请选择一份完全备份和差异备份文件");
             }
@@ -75,7 +76,7 @@ public class BackupService {
                 else if(Date1<Date2&&filePathList2.get(1).equals("full")) {
                     return Result.error("完全备份和差异备份文件时间不对应");
                 }
-                else if(Math.abs(Date1-Date2)>6){
+                else if(Math.abs(Date1-Date2)>6000000){
                     return Result.error("完全备份和差异备份文件时间相差过大");
                 }
                 else{
@@ -113,18 +114,30 @@ public class BackupService {
             else{
                 processBuilder = new ProcessBuilder(command, FilePath2, FilePath1);
             }
+            System.out.println("执行命令：" + Arrays.toString(new String[]{command, FilePath1, FilePath2}));
+
         }
         try {
             Process process = processBuilder.start();
+            processBuilder.redirectErrorStream(true);
             // 读取脚本输出
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
+            processBuilder.redirectErrorStream(true);
+            System.out.println("执行命令：" + processBuilder.command());
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
 
             // 等待脚本执行完成
             int exitCode = process.waitFor();
+            // 读取脚本的错误输出
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String errorLine;
+            while ((errorLine = errorReader.readLine()) != null) {
+                System.err.println("错误输出: " + errorLine);
+            }
+
             if(exitCode==0){
                 return Result.success();
             }

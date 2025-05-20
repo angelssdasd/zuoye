@@ -32,6 +32,7 @@
       <h3>
         已选择的文件
         <el-button type="danger" @click="clearSelectedFiles">清空</el-button>
+        <el-button type="danger" @click="deleteSelectFiles">删除文件</el-button>
         <el-button type="primary" @click="restore">恢复</el-button>
       </h3>
       <ul>
@@ -56,7 +57,7 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import request from '@/utils/request'
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 const data = reactive({
   tableData: [],
@@ -117,7 +118,7 @@ const confirmBackup = () => {
 
 
 const handleSelectionChange = (selection) => {
-  selectedFiles.value = selection.slice(0,2)// 只选择前两个文件
+  selectedFiles.value = selection
 }
 
 const reset = () => {
@@ -130,7 +131,7 @@ const clearSelectedFiles = () => {
   tableRef.value.clearSelection()
 }
 const restore = () => {
-  if (selectedFiles.value.length) {
+  if (selectedFiles.value.length<=2&&selectedFiles.value.length) {
     const backupIds = selectedFiles.value.map(file => file.backupId).join(',')
     request.post('/backup/restore', backupIds).then(res => {
       if (res.code === '200') {
@@ -140,10 +141,45 @@ const restore = () => {
         ElMessage.error(res.msg)
       }
     })
-  } else {
+  } else if(selectedFiles.value.length>2)
+  {
+    ElMessage.warning('恢复数据库至多要两个文件')
+  }
+  else {
     ElMessage.warning('请选择要恢复的文件')
   }
 }
+
+
+const deleteSelectFiles = () => {
+  if (selectedFiles.value.length) {
+    ElMessageBox.confirm(
+      '确定要删除所选的文件吗？此操作不可恢复。',
+      '警告',
+      {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }
+    ).then(() => {
+      const backupIds = selectedFiles.value.map(file => file.backupId).join(',')
+      request.delete('/backup/delete', { params: { backupIds } }).then(res => {
+        if (res.code === '200') {
+          ElMessage.success('删除成功')
+          load()
+        } else {
+          ElMessage.error(res.msg)
+        }
+      })
+    }).catch(() => {
+      ElMessage.info('已取消删除')
+      // 用户点击取消时不做任何操作
+    })
+  } else {
+    ElMessage.warning('请选择要删除的文件')
+  }
+}
+
 
 load()
 </script>

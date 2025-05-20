@@ -35,6 +35,11 @@ public class AutoReviewCommentScheduled {
                 commentService.deleteById(comment.getCommentId());
                 System.out.println("删除了敏感词：" + comment.getContent());
             }
+            else {
+                comment.setReviewStatus("通过");
+                commentService.update(comment);
+                System.out.println("审核通过：" + comment.getContent());
+            }
         }
     }
 

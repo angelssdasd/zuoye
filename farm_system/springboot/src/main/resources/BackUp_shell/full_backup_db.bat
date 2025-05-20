@@ -41,6 +41,7 @@ echo [%TIME%] Starting full backup...
     --single-transaction ^
     --source-data=2 ^
     --flush-logs ^
+    --ignore-table=manage.backup ^
     !DB_NAME! > "!FULL_BACKUP_FILE!"
 
 REM 检查备份结果
@@ -49,6 +50,7 @@ if !errorlevel! neq 0 (
     exit /b 2
 )
 echo [%TIME%] Full backup completed: !FULL_BACKUP_FILE!
+
 
 REM 记录binlog位置
 echo [%TIME%] Recording master status...

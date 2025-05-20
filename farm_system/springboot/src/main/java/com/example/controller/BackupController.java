@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import cn.hutool.core.date.DateUtil;
+import com.example.common.LogAOP;
 import com.example.entity.Backup;
 import com.example.common.Result;
 import com.example.service.BackupService;
@@ -30,6 +32,7 @@ public class BackupController {
         return Result.success(new PageInfo<>(list));
     }
 
+    @LogAOP(title = "恢复", content = "恢复数据库")
     @PostMapping("/restore")
     public Result restore(@RequestBody String backupIds) {
         ArrayList<Integer>backupIdList = new ArrayList<>();
@@ -49,10 +52,23 @@ public class BackupController {
     /*
     开始备份文件
      */
+    @LogAOP(title = "备份", content = "备份文件")
     @PostMapping("/start")
     public Result start(@RequestBody Map<String, Object> params ) {
         String type = (String) params.get("type");
         String userId =String.valueOf(params.get("userId"));
         return backupService.start(type, userId);
+    }
+
+    /*
+    删除备份文件
+     */
+    @LogAOP(title = "删除", content = "删除备份文件")
+    @PostMapping("/delete")
+    public Result delete(@RequestBody String backupIds) {
+        System.out.println(backupIds);
+        ArrayList<Integer>backupIdList = new ArrayList<>();
+        //去掉双引号
+    return Result.success();
     }
 }
