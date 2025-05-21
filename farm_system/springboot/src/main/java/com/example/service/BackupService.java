@@ -37,40 +37,46 @@ public class BackupService {
 
     //根据文件路径删除记录
     public void deleteByFilePath(String filePath) {
-        if(this.isFullBackupFile(filePath))
-        {
-            LocalDateTime FirstTime=backupMapper.getBackupTime(filePath);
-            List<Backup>SecondFile=backupMapper.selectByTime(FirstTime);
-            if(SecondFile.isEmpty())
+        try{
+            if(this.isFullBackupFile(filePath))
             {
-                backupMapper.deleteByFilePath(filePath);
-            }
-            else{
-                List<Backup> diffBackups = new ArrayList<>();
-                for (Backup backup : SecondFile) {
-                    if (isFullBackupFile(backup.getFilePath())) {
-                        diffBackups.add(backup);
-                    }
-                }
-                if(diffBackups.isEmpty()){
-                    for(Backup backup : SecondFile){
-                        backupMapper.deleteByFilePath(backup.getFilePath());
-                    }
+                LocalDateTime FirstTime=backupMapper.getBackupTime(filePath);
+                List<Backup>SecondFile=backupMapper.selectByTime(FirstTime);
+                if(SecondFile.isEmpty())
+                {
+                    deleteParentDirectory(filePath);
                 }
                 else{
-                    diffBackups.sort(Comparator.comparing(Backup::getBackupTime));
-                    LocalDateTime SecondBackupTime =backupMapper.getBackupTime(diffBackups.getFirst().getFilePath());
-                    List<Backup> diffFileList = backupMapper.selectByInterval(FirstTime,  SecondBackupTime);
-                    for(Backup backup : diffFileList){
-                        backupMapper.deleteByFilePath(backup.getFilePath());
+                    List<Backup> diffBackups = new ArrayList<>();
+                    for (Backup backup : SecondFile) {
+                        if (isFullBackupFile(backup.getFilePath())) {
+                            diffBackups.add(backup);
+                        }
+                    }
+                    if(diffBackups.isEmpty()){
+                        for(Backup backup : SecondFile){
+                            deleteParentDirectory(backup.getFilePath());
+                        }
+                    }
+                    else{
+                        diffBackups.sort(Comparator.comparing(Backup::getBackupTime));
+                        LocalDateTime SecondBackupTime =backupMapper.getBackupTime(diffBackups.getFirst().getFilePath());
+                        List<Backup> diffFileList = backupMapper.selectByInterval(FirstTime,  SecondBackupTime);
+                        for(Backup backup : diffFileList){
+                            deleteParentDirectory(backup.getFilePath());
+                        }
                     }
                 }
+                deleteParentDirectory(filePath);
+            }else{
+                // 调用backupMapper的deleteByFilePath方法，传入filePath参数
+                deleteParentDirectory(filePath);
             }
-            backupMapper.deleteByFilePath(filePath);
-        }else{
-            // 调用backupMapper的deleteByFilePath方法，传入filePath参数
-            backupMapper.deleteByFilePath(filePath);
-        }
+        }catch (Exception e)
+            {
+                System.err.println("删除文件失败: " + filePath);
+                e.printStackTrace();
+            }
     }
     public Result JudgeFilePath(ArrayList<Integer> backupIdList)
     {
@@ -263,7 +269,47 @@ public Result start(String type, String userId) {
 
     } catch (IOException | InterruptedException e) {
         return Result.error("执行备份脚本失败：" + e.getMessage());
+        }
     }
-}
 
+    /**
+     * 删除 .sql 文件、.txt 文件及对应的 diff 目录
+     */
+    private void deleteParentDirectory(String sqlFilePath) throws IOException {
+        File sqlFile = new File(sqlFilePath);
+        if (!sqlFile.exists()) {
+            System.out.println("SQL文件不存在: " + sqlFilePath);
+            return;
+        }
+        // 获取上级目录（例如 C:\backup\20250516010135\）
+        File parentDir = sqlFile.getParentFile();
+        // 删除整个目录（包含 .sql、.txt 等所有文件）
+        if (parentDir.exists() && parentDir.isDirectory()) {
+            deleteDirectory(parentDir);
+            System.out.println("删除上级目录: " + parentDir.getAbsolutePath() + " -> 成功");
+        }
+        backupMapper.deleteByFilePath(sqlFilePath);
+    }
+
+
+    /**
+     * 递归删除目录及其内容
+     */
+    private void deleteDirectory(File directory) throws IOException {
+        if (directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    deleteDirectory(file); // 递归删除子目录和文件
+                }
+            }
+        }
+        if (!directory.delete()) {
+            throw new IOException("无法删除目录或文件: " + directory.getAbsolutePath());
+        }
+    }
+
+    public boolean JudgeExist(Integer backupId) {
+        return  backupMapper.getFilePath(backupId)!=null;
+    }
 }

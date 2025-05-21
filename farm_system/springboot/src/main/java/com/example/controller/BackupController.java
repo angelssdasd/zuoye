@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import cn.hutool.core.date.DateUtil;
 import com.example.common.LogAOP;
 import com.example.entity.Backup;
 import com.example.common.Result;
@@ -73,9 +72,13 @@ public class BackupController {
             backupIdList.add(Integer.parseInt(s));
         }
         for (Integer backupId : backupIdList) {
-            String filePath = backupService.getFilePath(backupId);
-            backupService.deleteByFilePath(filePath);
+            if(backupService.JudgeExist(backupId))
+            {
+                String filePath = backupService.getFilePath(backupId);
+                backupService.deleteByFilePath(filePath);
+            }
         }
-    return Result.success();
+
+        return Result.success();
     }
 }

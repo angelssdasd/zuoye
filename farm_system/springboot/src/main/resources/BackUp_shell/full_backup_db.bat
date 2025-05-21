@@ -82,6 +82,6 @@ echo [%TIME%] All backup files generated in: !BACKUP_SUBDIR!
 "%MYSQL_HOME%\bin\mysql.exe" ^
     --defaults-extra-file="%MY_INI%" ^
     --database=manage ^
-    --execute="use manage; INSERT INTO backup (backup_time, file_path, operator_id) VALUES ('%DATE%', ' %BACKUP_PATH%',%operatorId%);"
+    --execute="use manage; INSERT INTO backup (backup_time, file_path, operator_id) VALUES ('%DATE%', '%BACKUP_PATH%',%operatorId%);"
 
 endlocal
