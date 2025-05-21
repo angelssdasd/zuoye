@@ -13,10 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BackupService {
@@ -40,8 +37,40 @@ public class BackupService {
 
     //根据文件路径删除记录
     public void deleteByFilePath(String filePath) {
-        // 调用backupMapper的deleteByFilePath方法，传入filePath参数
-        backupMapper.deleteByFilePath(filePath);
+        if(this.isFullBackupFile(filePath))
+        {
+            LocalDateTime FirstTime=backupMapper.getBackupTime(filePath);
+            List<Backup>SecondFile=backupMapper.selectByTime(FirstTime);
+            if(SecondFile.isEmpty())
+            {
+                backupMapper.deleteByFilePath(filePath);
+            }
+            else{
+                List<Backup> diffBackups = new ArrayList<>();
+                for (Backup backup : SecondFile) {
+                    if (isFullBackupFile(backup.getFilePath())) {
+                        diffBackups.add(backup);
+                    }
+                }
+                if(diffBackups.isEmpty()){
+                    for(Backup backup : SecondFile){
+                        backupMapper.deleteByFilePath(backup.getFilePath());
+                    }
+                }
+                else{
+                    diffBackups.sort(Comparator.comparing(Backup::getBackupTime));
+                    LocalDateTime SecondBackupTime =backupMapper.getBackupTime(diffBackups.getFirst().getFilePath());
+                    List<Backup> diffFileList = backupMapper.selectByInterval(FirstTime,  SecondBackupTime);
+                    for(Backup backup : diffFileList){
+                        backupMapper.deleteByFilePath(backup.getFilePath());
+                    }
+                }
+            }
+            backupMapper.deleteByFilePath(filePath);
+        }else{
+            // 调用backupMapper的deleteByFilePath方法，传入filePath参数
+            backupMapper.deleteByFilePath(filePath);
+        }
     }
     public Result JudgeFilePath(ArrayList<Integer> backupIdList)
     {

@@ -63,12 +63,19 @@ public class BackupController {
     /*
     删除备份文件
      */
-    @LogAOP(title = "删除", content = "删除备份文件")
-    @PostMapping("/delete")
-    public Result delete(@RequestBody String backupIds) {
-        System.out.println(backupIds);
+    @LogAOP(title = "删", content = "删除备份文件")
+    @DeleteMapping ("/delete")
+    public Result delete(@RequestParam String backupIds) {
         ArrayList<Integer>backupIdList = new ArrayList<>();
         //去掉双引号
+        String newBackupIds = backupIds.replaceAll("\"", "");
+        for (String s : newBackupIds.split(",")) {
+            backupIdList.add(Integer.parseInt(s));
+        }
+        for (Integer backupId : backupIdList) {
+            String filePath = backupService.getFilePath(backupId);
+            backupService.deleteByFilePath(filePath);
+        }
     return Result.success();
     }
 }
